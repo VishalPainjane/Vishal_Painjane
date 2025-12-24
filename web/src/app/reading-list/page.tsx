@@ -104,7 +104,7 @@ export default function ReadingListPage() {
         <motion.div variants={item} className="space-y-4">
           <h1 className="text-3xl font-bold tracking-tight">Reading List</h1>
           <p className="text-muted-foreground leading-relaxed">
-            A curated collection of papers, books, and articles I've explored in my journey.
+            A curated collection of papers, books, and articles I&apos;ve explored in my journey.
           </p>
         </motion.div>
 

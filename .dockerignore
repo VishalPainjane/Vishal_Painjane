@@ -1,0 +1,9 @@
+node_modules
+.next
+.git
+research
+build_history.ps1
+commit_changes.txt
+commit_changes.ps1
+.dockerignore
+Dockerfile

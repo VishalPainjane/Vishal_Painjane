@@ -74,7 +74,7 @@ export default function Home() {
           {/* Bio Section - Paragraphs */}
           <motion.div variants={item} className="space-y-6 text-base leading-relaxed max-w-none">
              <p>
-               I&apos;m a swe based in Tokyo. I love coffee, machine learning, math, and among others.
+               I{"'"}m a swe based in Tokyo. I love coffee, machine learning, math, and among others.
                Glad to have you here! Feel free to look around :)
              </p>
              
@@ -83,7 +83,7 @@ export default function Home() {
              </p>
 
              <p>
-                I ramble about things on my <Link href="/blog" className="text-[hsl(var(--primary))] font-bold hover:underline transition-colors hover:text-[hsl(var(--primary))/80]">blog</Link>; you can check it out if you&apos;re interested.
+                I ramble about things on my <Link href="/blog" className="text-[hsl(var(--primary))] font-bold hover:underline transition-colors hover:text-[hsl(var(--primary))/80]">blog</Link>; you can check it out if you{"'"}re interested.
              </p>
           </motion.div>
 
