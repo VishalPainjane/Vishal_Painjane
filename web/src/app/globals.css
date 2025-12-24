@@ -1,0 +1,90 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+:root {
+  /* Light Mode */
+  --background: 0 0% 100%;
+  --foreground: 240 10% 3.9%;
+  --primary: 263 70% 65%; /* #a78bfa */
+  
+  --muted: 240 4.8% 95.9%;
+  --muted-foreground: 240 3.8% 46.1%;
+  
+  --border: 240 5.9% 90%;
+  --radius: 0rem;
+}
+
+.dark {
+  /* Dark Mode - Exact Deep Blue/Black from Screenshot */
+  --background: 224 71% 4%; /* #030711 */
+  --foreground: 0 0% 98%; /* White text */
+  
+  --primary: 263 70% 65%; /* #a78bfa */
+  
+  --muted: 217 32% 17%;
+  --muted-foreground: 215 20.2% 65.1%;
+  
+  --border: 217 32% 17%;
+}
+
+@theme inline {
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-primary: hsl(var(--primary));
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-border: hsl(var(--border));
+  
+  /* Font Stack - Prioritize IBM Plex Mono */
+  --font-mono: "IBM Plex Mono", "Fira Code", "Courier Prime", monospace;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not(.light) {
+    --background: 224 71% 4%;
+    --foreground: 0 0% 98%;
+    --primary: 263 70% 65%;
+    --muted: 217 32% 17%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --border: 217 32% 17%;
+  }
+}
+
+body {
+  background: var(--color-background);
+  color: var(--color-foreground);
+  font-family: var(--font-mono);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@utility container {
+    margin-inline: auto;
+    padding-inline: 1rem;
+    max-width: 42rem; /* approx 672px */
+}
+
+@utility prose-custom {
+    @apply prose dark:prose-invert max-w-none font-mono;
+    p {
+        @apply leading-relaxed text-pretty;
+        margin-top: 1.5em;
+        margin-bottom: 1.5em;
+        font-size: 0.95rem;
+    }
+    h1 {
+        @apply scroll-m-20 text-4xl font-bold tracking-tight mb-6;
+    }
+    h2 {
+        @apply scroll-m-20 border-b pb-2 text-xl font-semibold tracking-tight first:mt-0;
+    }
+    a {
+        @apply font-medium text-[hsl(var(--primary))] underline underline-offset-4 decoration-[hsl(var(--primary))] hover:decoration-[hsl(var(--primary))/80];
+    }
+    ul {
+        @apply list-disc list-outside ml-5;
+    }
+    li {
+        @apply pl-1;
+    }
+}
