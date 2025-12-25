@@ -7,30 +7,29 @@ import { Brain, Divide, Code, RefreshCw } from "lucide-react";
 
 function PixelAlienIcon() {
   return (
-    <motion.div
-      animate={{ y: [0, -10, 0] }}
-      transition={{ 
-        duration: 2, 
-        repeat: Infinity, 
-        ease: "easeInOut" 
-      }}
-      className="text-[hsl(var(--primary))] mb-6 inline-block"
-    >
-      <svg
-        width="48"
-        height="48"
-        viewBox="0 0 24 24"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
+    <div className="mb-6 inline-block relative z-10">
+      <motion.div
+        layoutId="alien-logo"
+        className="inline-block will-change-transform"
+        transition={{
+          type: "spring",
+          stiffness: 250,
+          damping: 25
+        }}
       >
-         <path
-          fillRule="evenodd"
-          clipRule="evenodd"
-          d="M2 8H4V6H6V4H8V2H16V4H18V6H20V8H22V14H20V16H18V18H16V20H14V22H10V20H8V18H6V16H4V14H2V8ZM6 8H4V14H6V16H8V18H10V20H14V18H16V16H18V14H20V8H18V6H16V4H8V6H6V8ZM8 10H10V12H8V10ZM14 10H16V12H14V10Z"
-          fill="currentColor"
-        />
-      </svg>
-    </motion.div>
+        <motion.div
+          animate={{ y: [0, -10, 0] }}
+          transition={{ 
+            duration: 2, 
+            repeat: Infinity, 
+            ease: "easeInOut" 
+          }}
+          className="text-6xl will-change-transform"
+        >
+          👾
+        </motion.div>
+      </motion.div>
+    </div>
   );
 }
 
@@ -128,7 +127,8 @@ export default function Home() {
                 src="/images/gion-town.png" 
                 alt="Gion Town, Tokyo" 
                 fill
-                className="object-cover transition-transform duration-700 group-hover:scale-105"
+                sizes="(max-width: 768px) 100vw, 800px"
+                className="object-cover transition-transform duration-700 group-hover:scale-105 will-change-transform"
                 priority
             />
           </motion.section>
