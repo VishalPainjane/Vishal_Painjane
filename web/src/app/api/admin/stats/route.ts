@@ -2,8 +2,6 @@ import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/db';
 import { verifySession } from '@/lib/auth';
 import { cookies } from 'next/headers';
-import { stat, readdir } from 'fs/promises';
-import { join } from 'path';
 
 export async function GET() {
   const cookieStore = await cookies();
@@ -15,45 +13,29 @@ export async function GET() {
   if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
   try {
-    // 1. Database Size (include journal and WAL files)
+    // 1. Database Size (Approximation for PostgreSQL or local SQLite)
     let dbSize = 0;
-    const dbPath = join(process.cwd(), 'prisma', 'dev.db');
-    const dbWalPath = join(process.cwd(), 'prisma', 'dev.db-wal');
-    const dbJournalPath = join(process.cwd(), 'prisma', 'dev.db-journal');
-
-    const pathsToStat = [dbPath, dbWalPath, dbJournalPath];
-    for (const path of pathsToStat) {
-      try {
-        const stats = await stat(path);
-        dbSize += stats.size;
-      } catch (e: any) {
-        if (e.code !== 'ENOENT') { // Ignore file not found errors
-          console.warn(`Error stat-ing DB file ${path}:`, e);
-        }
-      }
-    }
-
-    // 2. Uploads Size (sum actual file sizes in secure-storage)
-    let uploadsSize = 0;
-    const uploadDir = join(process.cwd(), 'secure-storage');
-    try {
-      const files = await readdir(uploadDir);
-      for (const file of files) {
+    
+    // In production (Vercel), we're likely using PostgreSQL where we can't easily get file size
+    // In local dev, we might still be using SQLite
+    if (process.env.NODE_ENV !== 'production') {
+        const { stat } = require('fs/promises');
+        const { join } = require('path');
+        const dbPath = join(process.cwd(), 'prisma', 'dev.db');
         try {
-          const fileStats = await stat(join(uploadDir, file));
-          uploadsSize += fileStats.size;
-        } catch (e: any) {
-          if (e.code !== 'ENOENT') {
-            console.warn(`Error stat-ing uploaded file ${file}:`, e);
-          }
-        }
-      }
-    } catch (e: any) {
-      if (e.code !== 'ENOENT') { // Ignore directory not found errors
-        console.warn(`Error reading upload directory ${uploadDir}:`, e);
-      }
+            const stats = await stat(dbPath);
+            dbSize = stats.size;
+        } catch (e) {}
     }
 
+    // 2. Uploads Size (sum sizes from database records)
+    const uploads = await prisma.personalFile.aggregate({
+      _sum: {
+        size: true
+      }
+    });
+    
+    const uploadsSize = uploads._sum.size || 0;
     const totalSize = dbSize + uploadsSize;
 
     return NextResponse.json({

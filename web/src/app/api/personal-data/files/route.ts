@@ -2,9 +2,7 @@ import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/db';
 import { verifySession } from '@/lib/auth';
 import { cookies } from 'next/headers';
-import { writeFile } from 'fs/promises';
-import { join } from 'path';
-import { randomUUID } from 'crypto';
+import { put } from '@vercel/blob';
 
 export async function POST(request: Request) {
   const cookieStore = await cookies();
@@ -25,16 +23,18 @@ export async function POST(request: Request) {
     }
 
     const buffer = Buffer.from(await file.arrayBuffer());
-    const systemFilename = `${randomUUID()}-${file.name.replace(/[^a-zA-Z0-9.-]/g, '_')}`;
-    const uploadDir = join(process.cwd(), 'secure-storage');
-    const filePath = join(uploadDir, systemFilename);
-
-    await writeFile(filePath, buffer);
+    
+    // Upload to Vercel Blob
+    const blob = await put(file.name, buffer, { 
+      access: 'public',
+      addRandomSuffix: true
+    });
 
     const attachment = await prisma.personalFile.create({
       data: {
         entryId,
-        filename: systemFilename,
+        url: blob.url,
+        filename: blob.url, // Store the URL as filename for backward compatibility or unique identification
         originalName: file.name,
         mimeType: file.type,
         size: file.size,

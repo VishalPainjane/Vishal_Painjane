@@ -2,8 +2,7 @@ import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/db';
 import { verifySession } from '@/lib/auth';
 import { cookies } from 'next/headers';
-import { readFile } from 'fs/promises';
-import { join } from 'path';
+import { del } from '@vercel/blob';
 
 export async function GET(
   request: Request,
@@ -28,15 +27,27 @@ export async function GET(
       return new NextResponse('File not found', { status: 404 });
     }
 
-    const filePath = join(process.cwd(), 'secure-storage', fileRecord.filename);
-    const fileBuffer = await readFile(filePath);
+    // If it has a Vercel Blob URL, redirect to it
+    if (fileRecord.url) {
+        return NextResponse.redirect(fileRecord.url);
+    }
 
-    return new NextResponse(fileBuffer, {
-      headers: {
-        'Content-Type': fileRecord.mimeType,
-        'Content-Disposition': `attachment; filename="${fileRecord.originalName}"`,
-      },
-    });
+    // Fallback for old local files (if any still exist during transition)
+    const { readFile } = require('fs/promises');
+    const { join } = require('path');
+    try {
+        const filePath = join(process.cwd(), 'secure-storage', fileRecord.filename);
+        const fileBuffer = await readFile(filePath);
+
+        return new NextResponse(fileBuffer, {
+          headers: {
+            'Content-Type': fileRecord.mimeType,
+            'Content-Disposition': `attachment; filename="${fileRecord.originalName}"`,
+          },
+        });
+    } catch (e) {
+        return new NextResponse('File not found on disk', { status: 404 });
+    }
   } catch (error) {
     return new NextResponse('Internal Server Error', { status: 500 });
   }
@@ -57,17 +68,21 @@ export async function DELETE(
   const { id } = await params;
 
   try {
-    // Note: We should also delete the file from disk, but for now just DB record.
-    // In a full implementation, unlink(join(...)) should be called.
-    // I will add file deletion to keep storage clean.
     const fileRecord = await prisma.personalFile.findUnique({ where: { id } });
     
     if (fileRecord) {
-        const { unlink } = require('fs/promises');
-        try {
-            await unlink(join(process.cwd(), 'secure-storage', fileRecord.filename));
-        } catch (e) {
-            // Ignore if file missing on disk
+        // Delete from Vercel Blob if URL exists
+        if (fileRecord.url) {
+            await del(fileRecord.url);
+        } else if (fileRecord.filename) {
+            // Delete from local disk (legacy)
+            const { unlink } = require('fs/promises');
+            const { join } = require('path');
+            try {
+                await unlink(join(process.cwd(), 'secure-storage', fileRecord.filename));
+            } catch (e) {
+                // Ignore if file missing on disk
+            }
         }
         
         await prisma.personalFile.delete({
@@ -77,6 +92,7 @@ export async function DELETE(
 
     return NextResponse.json({ success: true });
   } catch (error) {
+    console.error("Delete error:", error);
     return NextResponse.json({ error: 'Failed to delete file' }, { status: 500 });
   }
 }
