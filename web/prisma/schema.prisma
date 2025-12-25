@@ -42,9 +42,10 @@ model PersonalFile {
   id           String        @id @default(uuid())
   entryId      String
   entry        PersonalEntry @relation(fields: [entryId], references: [id], onDelete: Cascade)
-  filename     String        @unique // System name on disk
+  filename     String?       @unique // System name on disk (now optional)
   originalName String        // Original upload name
   mimeType     String
   size         Int           // Bytes
+  url          String?       // URL to the file in Vercel Blob (now optional)
   createdAt    DateTime      @default(now())
 }
