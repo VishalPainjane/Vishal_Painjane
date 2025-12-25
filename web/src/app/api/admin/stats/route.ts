@@ -29,7 +29,7 @@ export async function GET() {
     }
 
     // 2. Uploads Size (sum sizes from database records)
-    const uploads = await (prisma.personalFile as any).aggregate({
+    const uploads = await prisma.personalFile.aggregate({
       _sum: {
         size: true
       }

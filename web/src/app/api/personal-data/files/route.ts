@@ -17,9 +17,30 @@ export async function POST(request: Request) {
     const formData = await request.formData();
     const file = formData.get('file') as File;
     const entryId = formData.get('entryId') as string;
+    const shouldReplace = formData.get('replace') === 'true';
 
     if (!file || !entryId) {
       return NextResponse.json({ error: 'Missing file or entryId' }, { status: 400 });
+    }
+
+    // If replace is requested, delete old attachments for this entry
+    if (shouldReplace) {
+        const oldFiles = await prisma.personalFile.findMany({
+            where: { entryId }
+        });
+        for (const oldFile of oldFiles) {
+            const oldUrl = (oldFile as any).url;
+            if (oldUrl) {
+                try {
+                    await del(oldUrl);
+                } catch (e) {
+                    console.error("Failed to delete old blob during replacement:", oldUrl, e);
+                }
+            }
+        }
+        await prisma.personalFile.deleteMany({
+            where: { entryId }
+        });
     }
 
     const buffer = Buffer.from(await file.arrayBuffer());
@@ -34,16 +55,17 @@ export async function POST(request: Request) {
       data: {
         entryId,
         url: blob.url,
-        filename: blob.url, // Store the URL as filename for backward compatibility or unique identification
+        filename: blob.url, 
         originalName: file.name,
         mimeType: file.type,
         size: file.size,
       } as any,
     });
 
+    console.log("File uploaded and saved to DB:", attachment.id);
     return NextResponse.json(attachment);
   } catch (error) {
-    console.error("Upload error:", error);
+    console.error("Upload error details:", error);
     return NextResponse.json({ error: 'Failed to upload file' }, { status: 500 });
   }
 }

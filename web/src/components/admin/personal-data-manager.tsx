@@ -33,6 +33,7 @@ export function PersonalDataManager({ onUpdate }: PersonalDataManagerProps) {
   const [content, setContent] = useState("");
   const [category, setCategory] = useState("General");
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [replaceExisting, setReplaceExisting] = useState(true);
 
   useEffect(() => {
     fetchEntries();
@@ -71,11 +72,19 @@ export function PersonalDataManager({ onUpdate }: PersonalDataManagerProps) {
                 const formData = new FormData();
                 formData.append("file", selectedFile);
                 formData.append("entryId", entry.id);
+                if (editingId && replaceExisting) {
+                    formData.append("replace", "true");
+                }
                 
-                await fetch("/api/personal-data/files", {
+                const fileRes = await fetch("/api/personal-data/files", {
                     method: "POST",
                     body: formData,
                 });
+
+                if (!fileRes.ok) {
+                    const errorData = await fileRes.json();
+                    alert("FILE UPLOAD FAILED: " + (errorData.details || errorData.error));
+                }
             }
 
             resetForm();
@@ -178,7 +187,7 @@ export function PersonalDataManager({ onUpdate }: PersonalDataManagerProps) {
             required
           />
           
-          <div className="flex items-center gap-4 border border-green-500/30 p-3 rounded border-dashed">
+          <div className="flex flex-col md:flex-row md:items-center gap-4 border border-green-500/30 p-3 rounded border-dashed">
             <label className="cursor-pointer flex items-center gap-2 text-green-500 hover:text-green-400 text-sm">
                 <Paperclip className="w-4 h-4" />
                 {selectedFile ? selectedFile.name : "ATTACH FILE (PDF, IMG, ETC)"}
@@ -192,6 +201,20 @@ export function PersonalDataManager({ onUpdate }: PersonalDataManagerProps) {
                 <button type="button" onClick={() => setSelectedFile(null)} className="text-red-500">
                     <X className="w-4 h-4" />
                 </button>
+            )}
+            {editingId && selectedFile && (
+                <div className="flex items-center gap-2 ml-auto">
+                    <input 
+                        type="checkbox" 
+                        id="replace" 
+                        checked={replaceExisting} 
+                        onChange={(e) => setReplaceExisting(e.target.checked)}
+                        className="accent-green-500"
+                    />
+                    <label htmlFor="replace" className="text-[10px] text-green-500/70 font-bold cursor-pointer">
+                        REPLACE EXISTING
+                    </label>
+                </div>
             )}
           </div>
 

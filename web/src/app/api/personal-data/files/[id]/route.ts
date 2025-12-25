@@ -24,13 +24,14 @@ export async function GET(
     });
 
     if (!fileRecord) {
+      console.warn("File record not found:", id);
       return new NextResponse('File not found', { status: 404 });
     }
 
     // If it has a Vercel Blob URL, redirect to it
-    const fileUrl = (fileRecord as any).url;
-    if (fileUrl) {
-        return NextResponse.redirect(fileUrl);
+    if (fileRecord.url) {
+        console.log("Redirecting to blob URL:", fileRecord.url);
+        return NextResponse.redirect(fileRecord.url);
     }
 
     // Fallback for old local files (if any still exist during transition)
@@ -73,9 +74,9 @@ export async function DELETE(
     
     if (fileRecord) {
         // Delete from Vercel Blob if URL exists
-        const fileUrl = (fileRecord as any).url;
-        if (fileUrl) {
-            await del(fileUrl);
+        if (fileRecord.url) {
+            console.log("Deleting blob:", fileRecord.url);
+            await del(fileRecord.url);
         } else if (fileRecord.filename) {
             // Delete from local disk (legacy)
             const { unlink } = require('fs/promises');
@@ -94,7 +95,7 @@ export async function DELETE(
 
     return NextResponse.json({ success: true });
   } catch (error) {
-    console.error("Delete error:", error);
+    console.error("Delete file error details:", error);
     return NextResponse.json({ error: 'Failed to delete file' }, { status: 500 });
   }
 }
