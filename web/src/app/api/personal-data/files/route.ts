@@ -38,7 +38,7 @@ export async function POST(request: Request) {
         originalName: file.name,
         mimeType: file.type,
         size: file.size,
-      },
+      } as any,
     });
 
     return NextResponse.json(attachment);

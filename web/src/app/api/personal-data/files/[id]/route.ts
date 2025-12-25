@@ -28,8 +28,9 @@ export async function GET(
     }
 
     // If it has a Vercel Blob URL, redirect to it
-    if (fileRecord.url) {
-        return NextResponse.redirect(fileRecord.url);
+    const fileUrl = (fileRecord as any).url;
+    if (fileUrl) {
+        return NextResponse.redirect(fileUrl);
     }
 
     // Fallback for old local files (if any still exist during transition)
@@ -72,8 +73,9 @@ export async function DELETE(
     
     if (fileRecord) {
         // Delete from Vercel Blob if URL exists
-        if (fileRecord.url) {
-            await del(fileRecord.url);
+        const fileUrl = (fileRecord as any).url;
+        if (fileUrl) {
+            await del(fileUrl);
         } else if (fileRecord.filename) {
             // Delete from local disk (legacy)
             const { unlink } = require('fs/promises');
