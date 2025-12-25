@@ -26,7 +26,7 @@ function PixelAlienIcon() {
           }}
           className="text-6xl will-change-transform"
         >
-          👾
+          <span suppressHydrationWarning>👾</span>
         </motion.div>
       </motion.div>
     </div>

@@ -1,15 +1,23 @@
 "use client";
 
 import { Mail, Github, Twitter } from "lucide-react";
+import { AdminGate } from "@/components/admin-gate";
+import { useState, useEffect } from "react";
 
 export function SiteFooter() {
+  const [currentYear, setCurrentYear] = useState<number | null>(null);
+
+  useEffect(() => {
+    setCurrentYear(new Date().getFullYear());
+  }, []);
+
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
     <footer className="py-12 pb-20 border-t border-transparent">
-      <div className="container mx-auto flex flex-col items-center justify-center gap-6 max-w-3xl px-6">
+      <div className="container mx-auto flex flex-col items-center justify-center gap-6 max-w-3xl px-6" suppressHydrationWarning>
         
         {/* To the Top Link */}
         <button 
@@ -49,9 +57,9 @@ export function SiteFooter() {
         </div>
 
         {/* Copyright */}
-        <p className="text-xs text-muted-foreground font-mono">
-          © {new Date().getFullYear()} vishal.ml
-        </p>
+        <div className="text-xs text-muted-foreground font-mono">
+          <AdminGate /> {currentYear} vishal.ml
+        </div>
 
       </div>
     </footer>

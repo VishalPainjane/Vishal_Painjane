@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
 
 const navItems = [
   { name: "About", href: "/about" },
@@ -16,13 +17,18 @@ const navItems = [
 
 export function SiteHeader() {
   const pathname = usePathname();
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   return (
-    <header className="w-full bg-background pt-8 pb-4">
+    <header className="w-full bg-background pt-8 pb-4" suppressHydrationWarning>
       <div className="container mx-auto flex items-center justify-between px-6 max-w-3xl" suppressHydrationWarning>
         {/* Logo and Navigation Links - Top Left */}
         <div className="flex items-center space-x-6">
-          {pathname !== "/" && (
+          {isClient && pathname !== "/" && ( // Only render on client after hydration
             <Link href="/" className="text-2xl sm:text-3xl md:text-4xl hover:opacity-80 transition-opacity">
               <motion.span 
                 layoutId="alien-logo" 
@@ -33,7 +39,7 @@ export function SiteHeader() {
                   damping: 25
                 }}
               >
-                👾
+                <span suppressHydrationWarning>👾</span>
               </motion.span>
             </Link>
           )}
@@ -48,7 +54,7 @@ export function SiteHeader() {
                     )}
                 >
                     {item.name}
-                    {pathname === item.href && (
+                    {isClient && pathname === item.href && ( // Only render on client after hydration
                         <motion.div
                             layoutId="active-nav"
                             className="absolute -bottom-1 left-0 right-0 h-[2px] bg-primary"
