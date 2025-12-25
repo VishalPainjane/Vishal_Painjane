@@ -24,7 +24,7 @@ export function SiteHeader() {
         <div className="flex items-center space-x-6">
           {pathname !== "/" && (
             <Link href="/" className="text-2xl sm:text-3xl md:text-4xl hover:opacity-80 transition-opacity">
-              <motion.div 
+              <motion.span 
                 layoutId="alien-logo" 
                 className="inline-block will-change-transform"
                 transition={{
@@ -34,7 +34,7 @@ export function SiteHeader() {
                 }}
               >
                 👾
-              </motion.div>
+              </motion.span>
             </Link>
           )}
           <nav className="flex items-center space-x-6 text-base">
