@@ -1,0 +1,50 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("PRISMA_DATABASE_URL") // Uses connection pooling
+  directUrl = env("DATABASE_URL")      // Used for migrations
+}
+
+model Reflection {
+  id          String   @id @default(uuid())
+  title       String
+  dateRange   String
+  monthGroup  String
+  slug        String   @unique
+  content     String?
+  createdAt   DateTime @default(now())
+}
+
+model RevokedToken {
+  id        String   @id @default(uuid())
+  jti       String   @unique
+  expiresAt DateTime
+  revokedAt DateTime @default(now())
+}
+
+model PersonalEntry {
+  id        String   @id @default(uuid())
+  title     String
+  content   String
+  category  String?  @default("General")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  attachments PersonalFile[]
+}
+
+model PersonalFile {
+  id           String        @id @default(uuid())
+  entryId      String
+  entry        PersonalEntry @relation(fields: [entryId], references: [id], onDelete: Cascade)
+  filename     String        @unique // System name on disk
+  originalName String        // Original upload name
+  mimeType     String
+  size         Int           // Bytes
+  createdAt    DateTime      @default(now())
+}
