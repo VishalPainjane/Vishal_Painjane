@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/db';
 import { verifySession } from '@/lib/auth';
 import { cookies } from 'next/headers';
-import { put } from '@vercel/blob';
+import { put, del } from '@vercel/blob';
 
 export async function POST(request: Request) {
   const cookieStore = await cookies();
