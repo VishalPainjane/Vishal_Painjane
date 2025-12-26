@@ -6,7 +6,7 @@ interface PageLayoutProps {
 
 export function PageLayout({ children }: PageLayoutProps) {
   return (
-    <div className="container mx-auto max-w-3xl px-6 mt-16 mb-20">
+    <div className="container mx-auto max-w-3xl px-6 mt-8 md:mt-16 mb-20">
       {children}
     </div>
   );

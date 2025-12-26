@@ -40,15 +40,15 @@ function AccordionItem({ item }: { item: ReflectionGroup }) {
     <div className="border-b border-transparent">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex w-full items-center justify-between py-4 text-left group"
+        className="flex w-full items-center justify-between py-3 md:py-4 text-left group"
       >
-        <span className="text-primary font-bold text-lg group-hover:opacity-80 transition-opacity">
+        <span className="text-primary font-bold text-base sm:text-lg group-hover:opacity-80 transition-opacity">
             {item.month}
         </span>
         {isOpen ? (
-            <ChevronUp className="h-4 w-4 text-muted-foreground" />
+            <ChevronUp className="h-4 w-4 text-muted-foreground shrink-0" />
         ) : (
-            <ChevronDown className="h-4 w-4 text-muted-foreground" />
+            <ChevronDown className="h-4 w-4 text-muted-foreground shrink-0" />
         )}
       </button>
       <AnimatePresence initial={false}>

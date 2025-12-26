@@ -103,15 +103,15 @@ export function TechnologyManager({ onUpdate }: TechnologyManagerProps) {
         </form>
       )}
 
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
         {techs.map((t) => (
-            <div key={t.id} className="border border-border p-2 rounded bg-muted/10 flex items-center justify-between gap-2 group hover:border-primary/30 transition-colors">
-                <div className="flex items-center gap-2 overflow-hidden">
+            <div key={t.id} className="border border-border p-2 rounded bg-muted/10 flex items-center justify-between gap-2 group hover:border-primary/30 transition-colors min-w-0">
+                <div className="flex items-center gap-2 overflow-hidden flex-1">
                     <div className="w-6 h-6 shrink-0 flex items-center justify-center text-primary" dangerouslySetInnerHTML={{ __html: t.icon.startsWith('<svg') ? t.icon : `<img src="${t.icon}" class="w-full h-full object-contain" />` }} />
-                    <span className="text-xs text-primary font-bold truncate">{t.name}</span>
+                    <span className="text-xs text-primary font-bold truncate flex-1">{t.name}</span>
                 </div>
-                <button onClick={() => handleDelete(t.id)} className="text-red-500 opacity-0 group-hover:opacity-100 transition-opacity">
-                    <Trash2 className="w-3 h-3" />
+                <button onClick={() => handleDelete(t.id)} className="text-red-500 opacity-0 group-hover:opacity-100 focus:opacity-100 transition-opacity p-1">
+                    <Trash2 className="w-3.5 h-3.5" />
                 </button>
             </div>
         ))}

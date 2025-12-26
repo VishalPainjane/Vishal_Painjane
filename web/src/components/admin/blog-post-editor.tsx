@@ -136,7 +136,7 @@ export function BlogPostEditor({
         </div>
       </div>
 
-      <form onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-12 gap-8 pb-32">
+      <form onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-12 gap-8 pb-40 lg:pb-32">
         {/* Input Column */}
         <div className={`${viewMode === 'preview' ? 'hidden' : viewMode === 'split' ? 'lg:col-span-6' : 'lg:col-span-8'} flex flex-col gap-8`}>
             <div className="grid gap-6">
@@ -148,13 +148,13 @@ export function BlogPostEditor({
                         type="text"
                         value={title}
                         onChange={(e) => setTitle(e.target.value)}
-                        className="w-full bg-muted/10 border border-border text-primary p-4 rounded-xl outline-none focus:border-primary/50 focus:bg-background transition-all font-black text-2xl placeholder:text-primary/10"
+                        className="w-full bg-muted/10 border border-border text-primary p-4 rounded-xl outline-none focus:border-primary/50 focus:bg-background transition-all font-black text-xl md:text-2xl placeholder:text-primary/10"
                         placeholder="IDENTIFY TRANSMISSION..."
                         required
                     />
                 </div>
 
-                <div className="grid md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="group">
                         <div className="flex justify-between items-center mb-2">
                             <label className="text-[10px] font-black text-primary/30 flex items-center gap-2 uppercase tracking-widest group-focus-within:text-primary transition-colors">
@@ -207,7 +207,7 @@ export function BlogPostEditor({
                 <label className="text-[10px] font-black text-primary/30 mb-2 flex items-center gap-2 uppercase tracking-widest group-focus-within:text-primary transition-colors">
                     Content_Payload
                 </label>
-                <div className="rounded-xl overflow-hidden border border-border focus-within:border-primary/30 transition-all">
+                <div className="rounded-xl overflow-hidden border border-border focus-within:border-primary/30 transition-all bg-muted/5">
                     <SimpleMdeReact
                         value={content}
                         onChange={setContent}
@@ -217,10 +217,10 @@ export function BlogPostEditor({
             </div>
         </div>
 
-        {/* Preview Column - This uses public site theme (not hacker-theme) */}
+        {/* Preview Column */}
         <div className={`${viewMode === 'edit' ? 'hidden' : viewMode === 'split' ? 'lg:col-span-6' : 'lg:col-span-12'} animate-in fade-in duration-500`}>
-            <div className="sticky top-6 rounded-2xl bg-background border border-border shadow-2xl overflow-hidden">
-                <div className="bg-muted/30 px-6 py-3 border-b border-border flex justify-between items-center">
+            <div className="sticky top-20 rounded-2xl bg-background border border-border shadow-2xl overflow-hidden">
+                <div className="bg-muted/30 px-4 md:px-6 py-3 border-b border-border flex justify-between items-center">
                     <div className="flex items-center gap-3">
                         <div className="flex gap-1.5">
                             <div className="w-2.5 h-2.5 rounded-full bg-muted-foreground/20"></div>
@@ -230,7 +230,7 @@ export function BlogPostEditor({
                         <span className="text-[9px] font-black text-muted-foreground tracking-[0.2em] uppercase text-primary">Simulated_View</span>
                     </div>
                 </div>
-                <div className="p-10 max-h-[85vh] overflow-y-auto bg-background scrollbar-thin scrollbar-thumb-muted border-border scrollbar-track-transparent">
+                <div className="p-4 md:p-10 max-h-[70vh] lg:max-h-[85vh] overflow-y-auto bg-background scrollbar-thin scrollbar-thumb-muted border-border scrollbar-track-transparent">
                     <div className="text-foreground max-w-2xl mx-auto">
                         <article>
                             <header className="mb-10 border-b border-border pb-8">
@@ -239,13 +239,13 @@ export function BlogPostEditor({
                                         <img src={coverImage} alt="Cover" className="w-full h-full object-cover" />
                                     </div>
                                 )}
-                                <h1 className="text-4xl md:text-5xl font-bold mb-6 text-foreground tracking-tight leading-tight">
+                                <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-foreground tracking-tight leading-tight">
                                     {title || "UNTITLED_TRANSMISSION"}
                                 </h1>
-                                <div className="flex items-center gap-4 text-xs text-muted-foreground font-mono uppercase tracking-widest">
+                                <div className="flex items-center gap-4 text-[10px] text-muted-foreground font-mono uppercase tracking-widest">
                                     <span>{new Date().toLocaleDateString()}</span>
                                     <span>•</span>
-                                    <span className="text-muted-foreground/50 lowercase italic">/{title.toLowerCase().replace(/\s+/g, '-')}</span>
+                                    <span className="text-muted-foreground/50 lowercase italic truncate">/{title.toLowerCase().replace(/\s+/g, '-')}</span>
                                 </div>
                             </header>
                             <MarkdownRenderer content={content || "*Awaiting data transmission...*"} />
@@ -256,18 +256,18 @@ export function BlogPostEditor({
         </div>
 
         {/* Action Bar */}
-        <div className="fixed bottom-10 right-10 flex items-center gap-4 z-[60]">
+        <div className="fixed bottom-6 inset-x-6 md:inset-x-auto md:bottom-10 md:right-10 flex flex-col sm:flex-row items-stretch sm:items-center gap-4 z-[60]">
             <button
                 type="button"
                 onClick={onCancel}
-                className="group flex items-center gap-3 bg-background/80 backdrop-blur-xl border border-red-500/20 text-red-500/50 hover:text-red-500 hover:border-red-500/50 px-6 py-4 rounded-2xl transition-all duration-300 font-black text-[10px] uppercase tracking-widest shadow-2xl"
+                className="group flex items-center justify-center gap-3 bg-background/80 backdrop-blur-xl border border-red-500/20 text-red-500/50 hover:text-red-500 hover:border-red-500/50 px-6 py-4 rounded-2xl transition-all duration-300 font-black text-[10px] uppercase tracking-widest shadow-2xl"
             >
                 Terminate
             </button>
             <button
                 type="submit"
                 disabled={loading}
-                className="group flex items-center gap-3 bg-primary text-background px-8 py-4 rounded-2xl font-black text-[10px] uppercase tracking-widest shadow-[0_0_30px_rgba(34,197,94,0.3)] hover:bg-primary/90 transition-all duration-300 disabled:opacity-50"
+                className="group flex items-center justify-center gap-3 bg-primary text-background px-8 py-4 rounded-2xl font-black text-[10px] uppercase tracking-widest shadow-[0_0_30px_rgba(34,197,94,0.3)] hover:bg-primary/90 transition-all duration-300 disabled:opacity-50"
             >
                 {loading ? <Loader2 className="animate-spin h-4 w-4" /> : <Send className="w-4 h-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />}
                 {loading ? "Processing..." : (isEditing ? "Patch Intel" : "Broadcast Intel")}

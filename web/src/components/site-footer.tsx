@@ -1,8 +1,8 @@
 "use client";
 
-import { Mail, Github, Twitter } from "lucide-react";
-import { AdminGate } from "@/components/admin-gate";
+import { Mail, Github, Twitter, Home } from "lucide-react";
 import { useState, useEffect } from "react";
+import Link from "next/link";
 
 export function SiteFooter() {
   const [currentYear, setCurrentYear] = useState<number | null>(null);
@@ -12,7 +12,9 @@ export function SiteFooter() {
   }, []);
 
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (typeof window !== 'undefined') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   };
 
   return (
@@ -29,8 +31,15 @@ export function SiteFooter() {
 
         {/* Social Icons */}
         <div className="flex items-center gap-6" suppressHydrationWarning>
+            <Link 
+                href="/" 
+                className="text-[hsl(var(--primary))] hover:text-[hsl(var(--primary))/80] transition-colors"
+                aria-label="Home"
+            >
+                <Home className="w-5 h-5" />
+            </Link>
             <a 
-                href="mailto:vishal@vishal.ml"  
+                href="mailto:vishal@vishal.ml" 
                 className="text-[hsl(var(--primary))] hover:text-[hsl(var(--primary))/80] transition-colors"
                 aria-label="Email"
             >
@@ -58,7 +67,7 @@ export function SiteFooter() {
 
         {/* Copyright */}
         <div className="text-xs text-muted-foreground font-mono" suppressHydrationWarning>
-          <AdminGate /> {currentYear} vishal.ml
+          <Link href="/admin" className="cursor-default hover:text-foreground transition-colors" aria-label="Admin Access">©</Link> {currentYear} vishal.ml
         </div>
 
       </div>
