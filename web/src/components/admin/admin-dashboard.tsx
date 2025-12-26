@@ -8,7 +8,7 @@ import { ProjectManager } from "@/components/admin/project-manager";
 import { ReadingListManager } from "@/components/admin/reading-list-manager";
 import { TechnologyManager } from "@/components/admin/technology-manager";
 import { LogoutButton } from "@/components/admin/logout-button";
-import { BookOpen, Lock, LayoutDashboard, HardDrive, FileText, Code, Library, Layers, ShieldCheck, Terminal } from "lucide-react";
+import { BookOpen, Lock, LayoutDashboard, HardDrive, FileText, Code, Library, Layers, ShieldCheck, Terminal, X } from "lucide-react";
 
 interface StorageStats {
   formattedTotal: string;
@@ -39,6 +39,7 @@ export function AdminDashboard() {
   const TabButton = ({ id, label, Icon }: { id: typeof activeTab, label: string, Icon: any }) => (
       <button
         onClick={() => setActiveTab(id)}
+        suppressHydrationWarning
         className={`w-full px-4 py-3 rounded-xl text-sm font-bold flex items-center gap-3 transition-all ${
             activeTab === id
             ? "bg-primary text-background shadow-[0_0_20px_hsl(var(--primary)/0.3)] scale-[1.02]" 
@@ -51,18 +52,26 @@ export function AdminDashboard() {
   );
 
   return (
-    <div className="flex min-h-screen hacker-theme bg-background text-primary font-mono overflow-hidden">
-      {/* Sidebar Navigation */}
-      <aside className={`w-64 border-r border-border flex flex-col transition-all duration-300 ${isSidebarOpen ? 'ml-0' : '-ml-64'}`}>
-        <div className="p-6 border-b border-border flex flex-col gap-1">
-            <div className="flex items-center gap-2 text-primary">
-                <Terminal className="w-5 h-5" />
-                <h1 className="font-black tracking-tighter text-lg">SYSTEM_ROOT</h1>
+    <div className="flex min-h-screen hacker-theme bg-background text-primary font-mono overflow-hidden relative" suppressHydrationWarning>
+      {/* Sidebar Navigation - Responsive Overlay */}
+      <aside className={`
+        fixed inset-y-0 left-0 z-[100] w-64 border-r border-border bg-background flex flex-col transition-transform duration-300 xl:relative xl:translate-x-0
+        ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full xl:ml-[-16rem]'}
+      `} suppressHydrationWarning>
+        <div className="p-6 border-b border-border flex flex-col gap-1" suppressHydrationWarning>
+            <div className="flex items-center justify-between" suppressHydrationWarning>
+                <div className="flex items-center gap-2 text-primary" suppressHydrationWarning>
+                    <Terminal className="w-5 h-5" />
+                    <h1 className="font-black tracking-tighter text-lg">SYSTEM_ROOT</h1>
+                </div>
+                <button onClick={() => setIsSidebarOpen(false)} className="xl:hidden p-1 text-muted-foreground">
+                    <X className="w-5 h-5" />
+                </button>
             </div>
             <p className="text-[9px] opacity-40 uppercase tracking-[0.2em]">tokyo_sector_01</p>
         </div>
 
-        <nav className="flex-1 p-4 flex flex-col gap-2 mt-4">
+        <nav className="flex-1 p-4 flex flex-col gap-2 mt-4 overflow-y-auto">
             <div className="text-[10px] text-muted-foreground font-bold mb-2 ml-2 tracking-widest uppercase">Modules</div>
             <TabButton id="reflections" label="Neural Logs" Icon={BookOpen} />
             <TabButton id="blog" label="Intel Broadcast" Icon={FileText} />
@@ -78,44 +87,52 @@ export function AdminDashboard() {
             {stats && (
                 <div className="px-3 py-2 rounded-lg bg-primary/5 border border-primary/10">
                     <div className="flex items-center justify-between text-[10px] mb-1">
-                        <span className="opacity-50 uppercase">Storage Link</span>
+                        <span className="opacity-50 uppercase text-[8px]">Storage Link</span>
                         <HardDrive className="w-2.5 h-2.5" />
                     </div>
-                    <div className="text-sm font-black text-primary">{stats.formattedTotal}</div>
+                    <div className="text-xs font-black text-primary truncate">{stats.formattedTotal}</div>
                 </div>
             )}
             <LogoutButton />
         </div>
       </aside>
 
+      {/* Mobile Sidebar Backdrop */}
+      {isSidebarOpen && (
+          <div 
+            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[90] xl:hidden"
+            onClick={() => setIsSidebarOpen(false)}
+          />
+      )}
+
       {/* Main Control Surface */}
       <main className="flex-1 flex flex-col min-w-0 overflow-hidden relative">
         {/* Top Status Bar */}
-        <header className="h-16 border-b border-border flex items-center justify-between px-8 bg-muted/10 backdrop-blur-xl z-30">
-            <div className="flex items-center gap-6">
+        <header className="h-16 border-b border-border flex items-center justify-between px-4 md:px-8 bg-muted/10 backdrop-blur-xl z-30">
+            <div className="flex items-center gap-4 md:gap-6">
                 <button 
                     onClick={() => setIsSidebarOpen(!isSidebarOpen)}
                     className="p-2 hover:bg-primary/10 rounded transition-colors text-primary/50 hover:text-primary"
                 >
                     <LayoutDashboard className="w-4 h-4" />
                 </button>
-                <div className="flex items-center gap-3 text-xs">
-                    <ShieldCheck className="w-3.5 h-3.5 opacity-50" />
-                    <span className="opacity-30 tracking-widest">SECURE_LINK:</span>
-                    <span className="text-primary font-bold">ESTABLISHED</span>
+                <div className="flex items-center gap-3 text-xs overflow-hidden">
+                    <ShieldCheck className="w-3.5 h-3.5 opacity-50 shrink-0" />
+                    <span className="opacity-30 tracking-widest hidden sm:inline">SECURE_LINK:</span>
+                    <span className="text-primary font-bold text-[10px] sm:text-xs">ESTABLISHED</span>
                 </div>
             </div>
 
             <div className="flex items-center gap-4">
                 <div className="flex items-center gap-2">
                     <div className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse shadow-[0_0_8px_hsl(var(--primary))]"></div>
-                    <span className="text-[10px] font-bold opacity-50 uppercase tracking-tighter">Live_Sync</span>
+                    <span className="text-[10px] font-bold opacity-50 uppercase tracking-tighter hidden xs:inline">Live_Sync</span>
                 </div>
             </div>
         </header>
 
         {/* Content Area */}
-        <div className="flex-1 overflow-y-auto bg-background p-8 scrollbar-thin scrollbar-thumb-primary/10 scrollbar-track-transparent">
+        <div className="flex-1 overflow-y-auto bg-background p-4 md:p-8 scrollbar-thin scrollbar-thumb-primary/10 scrollbar-track-transparent">
             <div className="max-w-7xl mx-auto w-full animate-in fade-in slide-in-from-bottom-2 duration-700">
                 {activeTab === "reflections" && <AddReflectionForm onUpdate={fetchStats} />}
                 {activeTab === "blog" && <BlogManager onUpdate={fetchStats} />}

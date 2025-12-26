@@ -21,6 +21,7 @@ export function MarkdownRenderer({ content }: MarkdownRendererProps) {
         remarkPlugins={[remarkGfm, remarkMath]}
         rehypePlugins={[rehypeHighlight, rehypeKatex]}
         components={{
+          p: ({ children }) => <div className="mb-4 last:mb-0 leading-relaxed">{children}</div>,
           a: ({ node, ...props }) => (
             <a {...props} className="text-primary hover:underline" target="_blank" rel="noopener noreferrer" />
           ),
