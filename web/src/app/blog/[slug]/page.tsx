@@ -40,7 +40,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             <div className="flex items-center gap-4 text-sm text-muted-foreground font-mono">
                 <div className="flex items-center gap-2">
                     <Calendar className="w-4 h-4" />
-                    <time dateTime={post.createdAt.toISOString()}>
+                    <time dateTime={new Date(post.createdAt).toISOString()}>
                     {new Date(post.createdAt).toLocaleDateString("en-US", { 
                         year: 'numeric', 
                         month: 'long', 
