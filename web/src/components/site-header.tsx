@@ -37,7 +37,7 @@ export function SiteHeader() {
     <header className="w-full bg-background/80 pt-6 md:pt-8 pb-4 sticky top-0 z-50 border-b border-border/50 backdrop-blur-md" suppressHydrationWarning>
       <div className="container mx-auto flex items-center justify-between px-6 max-w-3xl" suppressHydrationWarning>
         {/* Left Side: Logo and Desktop Nav */}
-        <div className="flex items-center gap-6">
+        <div className="flex items-center gap-6" suppressHydrationWarning>
           {isClient && pathname !== "/" && (
             <Link href="/" className="text-2xl hover:opacity-80 transition-opacity shrink-0">
               <motion.span 
@@ -73,7 +73,7 @@ export function SiteHeader() {
         </div>
         
         {/* Right Side: Theme Toggle and Mobile Trigger */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2" suppressHydrationWarning>
             <ThemeToggle />
             <button 
                 className="md:hidden p-2 text-muted-foreground hover:text-foreground transition-colors"
