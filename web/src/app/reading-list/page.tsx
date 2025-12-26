@@ -1,18 +1,11 @@
-import { prisma } from "@/lib/db";
+import { getCachedReadingList } from "@/lib/cached-data";
 import { ReadingListView } from "@/components/reading-list-view";
 import { PageLayout } from "@/components/page-layout";
 
 export const revalidate = 60;
 
 export default async function ReadingListPage() {
-  let items: any[] = [];
-  try {
-    items = await prisma.readingItem.findMany({
-      orderBy: { createdAt: "desc" },
-    });
-  } catch (error) {
-    console.error("Reading list table missing:", error);
-  }
+  const items = await getCachedReadingList();
 
   return (
     <PageLayout>

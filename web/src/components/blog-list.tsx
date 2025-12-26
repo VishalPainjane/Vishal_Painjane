@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { Calendar, Clock, ArrowRight } from "lucide-react";
 
@@ -96,11 +97,14 @@ export function BlogList({ posts }: BlogListProps) {
               className="group relative flex flex-col gap-6"
             >
               {post.coverImage && (
-                  <Link href={`/blog/${post.slug}`} className="block aspect-[21/9] overflow-hidden rounded-xl border border-border/50 transition-all group-hover:border-primary/50 shadow-2xl shadow-primary/5">
-                      <img 
+                  <Link href={`/blog/${post.slug}`} className="block aspect-[21/9] overflow-hidden rounded-xl border border-border/50 transition-all group-hover:border-primary/50 shadow-2xl shadow-primary/5 relative">
+                      <Image 
                         src={post.coverImage} 
-                        alt={post.title} 
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-80 group-hover:opacity-100"
+                        alt={post.title}
+                        fill
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1200px"
+                        className="object-cover transition-transform duration-700 group-hover:scale-105 opacity-80 group-hover:opacity-100"
+                        priority={false}
                       />
                   </Link>
               )}

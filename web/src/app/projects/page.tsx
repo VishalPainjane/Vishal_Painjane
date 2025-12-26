@@ -1,31 +1,14 @@
-import { prisma } from "@/lib/db";
+import { getCachedProjects, getCachedTechnologies } from "@/lib/cached-data";
 import { ProjectList } from "@/components/project-list";
 import { PageLayout } from "@/components/page-layout";
 
 export const revalidate = 60;
 
 export default async function ProjectsPage() {
-  let projects: any[] = [];
-  let technologies: any[] = [];
-
-  try {
-    const data = await Promise.all([
-      prisma.project.findMany({
-        orderBy: { createdAt: "desc" },
-        include: {
-          technologies: true,
-        },
-      }),
-      prisma.technology.findMany({
-        orderBy: { name: "asc" },
-      })
-    ]);
-    projects = data[0];
-    technologies = data[1];
-  } catch (error) {
-    console.error("Database table missing or connection issue:", error);
-    // Gracefully handle missing tables while migration is pending
-  }
+  const [projects, technologies] = await Promise.all([
+    getCachedProjects(),
+    getCachedTechnologies()
+  ]);
 
   return (
     <PageLayout>
@@ -43,7 +26,7 @@ export default async function ProjectsPage() {
                     ))}
                     {technologies.length === 0 && (
                         <span className="text-muted-foreground text-sm">
-                            {projects.length === 0 ? "Initializing database..." : "No technologies listed yet."}
+                            No technologies listed yet.
                         </span>
                     )}
                 </div>

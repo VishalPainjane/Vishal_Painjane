@@ -19,6 +19,9 @@ model Reflection {
   slug        String   @unique
   content     String?
   createdAt   DateTime @default(now())
+  
+  @@index([createdAt])
+  @@index([monthGroup])
 }
 
 model RevokedToken {
@@ -36,6 +39,8 @@ model PersonalEntry {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   attachments PersonalFile[]
+  
+  @@index([createdAt])
 }
 
 model PersonalFile {
@@ -60,6 +65,9 @@ model Post {
   published  Boolean  @default(false)
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
+  
+  @@index([createdAt])
+  @@index([published])
 }
 
 model Project {
@@ -70,6 +78,8 @@ model Project {
   technologies Technology[]
   createdAt    DateTime     @default(now())
   updatedAt    DateTime     @updatedAt
+  
+  @@index([createdAt])
 }
 
 model Technology {
@@ -78,6 +88,8 @@ model Technology {
   icon      String    // SVG string or URL
   projects  Project[]
   createdAt DateTime  @default(now())
+  
+  @@index([name])
 }
 
 model ReadingItem {
@@ -89,4 +101,6 @@ model ReadingItem {
   type      String   // "Paper" | "Book"
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  
+  @@index([createdAt])
 }

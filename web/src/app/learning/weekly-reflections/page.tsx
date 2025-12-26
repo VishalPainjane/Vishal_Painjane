@@ -1,11 +1,5 @@
 import Link from "next/link";
-import { motion } from "framer-motion"; // Server components can't use motion directly for layout, but here we are mixing client/server. 
-// Actually, to use motion in Server Component children is tricky unless wrapped. 
-// I'll keep the page "use client" wrapper in a separate component or just make the whole page "use client" if simpler?
-// No, I want to fetch data server side.
-// I'll make the page a Server Component and import a Client Component wrapper for the layout animation.
-
-import { prisma } from "@/lib/db";
+import { getCachedReflections } from "@/lib/cached-data";
 import { ReflectionsList } from "@/components/reflections-list";
 import { PageTransitionWrapper } from "@/components/page-transition-wrapper";
 import { PageLayout } from "@/components/page-layout";
@@ -30,39 +24,10 @@ function SmallAlienIcon() {
   );
 }
 
-// Fetch data
-async function getReflections() {
-  try {
-    const reflections = await prisma.reflection.findMany({
-      orderBy: { createdAt: 'desc' },
-    });
-
-    const grouped = reflections.reduce((acc: any, curr) => {
-      const month = curr.monthGroup;
-      if (!acc[month]) {
-        acc[month] = { month: month, isOpen: false, weeks: [] };
-      }
-      acc[month].weeks.push({
-        title: curr.title,
-        dateRange: curr.dateRange,
-        content: curr.content,
-        slug: curr.slug
-      });
-      return acc;
-    }, {});
-
-    // Convert object to array and maybe sort keys if needed (descending months)
-    return Object.values(grouped); 
-  } catch (error) {
-    console.error("Database Error:", error);
-    return [];
-  }
-}
-
-export const revalidate = 60; // Ensure it revalidates on request
+export const revalidate = 60;
 
 export default async function WeeklyReflectionsPage() {
-  const reflectionsData = await getReflections();
+  const reflectionsData = await getCachedReflections();
 
   return (
     <PageLayout>

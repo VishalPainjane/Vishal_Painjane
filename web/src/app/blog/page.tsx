@@ -1,19 +1,11 @@
-import { prisma } from "@/lib/db";
+import { getCachedPosts } from "@/lib/cached-data";
 import { BlogList } from "@/components/blog-list";
 import { PageLayout } from "@/components/page-layout";
 
 export const revalidate = 60;
 
 export default async function BlogPage() {
-  let posts: any[] = [];
-  try {
-    posts = await prisma.post.findMany({
-      where: { published: true },
-      orderBy: { createdAt: "desc" },
-    });
-  } catch (error) {
-    console.error("Blog table missing:", error);
-  }
+  const posts = await getCachedPosts();
 
   return (
     <PageLayout>

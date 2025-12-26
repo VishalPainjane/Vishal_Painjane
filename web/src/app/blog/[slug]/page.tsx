@@ -1,11 +1,11 @@
-import { prisma } from "@/lib/db";
 import { notFound } from "next/navigation";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import Link from "next/link";
 import { ArrowLeft, Calendar } from "lucide-react";
 import { PageLayout } from "@/components/page-layout";
+import { getCachedPostBySlug } from "@/lib/cached-data";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 60;
 
 interface BlogPostPageProps {
   params: Promise<{ slug: string }>;
@@ -14,9 +14,7 @@ interface BlogPostPageProps {
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const { slug } = await params;
   
-  const post = await prisma.post.findUnique({
-    where: { slug },
-  });
+  const post = await getCachedPostBySlug(slug);
 
   if (!post || !post.published) {
     notFound();

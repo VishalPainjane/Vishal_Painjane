@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { prisma } from "@/lib/db";
+import { getCachedReflectionBySlug } from "@/lib/cached-data";
 import { PageTransitionWrapper } from "@/components/page-transition-wrapper";
 import { PageLayout } from "@/components/page-layout";
 
@@ -24,24 +24,11 @@ function SmallAlienIcon() {
   );
 }
 
-// Fetch data for a specific slug
-async function getReflection(slug: string) {
-  try {
-    const reflection = await prisma.reflection.findUnique({
-      where: { slug },
-    });
-    return reflection;
-  } catch (error) {
-    console.error("Database Error:", error);
-    return null;
-  }
-}
-
 export const revalidate = 60;
 
 export default async function ReflectionPage({ params }: { params: Promise<{ slug: string }> }) {
   const resolvedParams = await params;
-  const reflection = await getReflection(resolvedParams.slug);
+  const reflection = await getCachedReflectionBySlug(resolvedParams.slug);
 
   if (!reflection) {
     notFound();
