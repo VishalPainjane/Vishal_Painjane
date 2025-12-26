@@ -28,9 +28,9 @@ export function SiteFooter() {
         </button>
 
         {/* Social Icons */}
-        <div className="flex items-center gap-6">
+        <div className="flex items-center gap-6" suppressHydrationWarning>
             <a 
-                href="mailto:vishal@vishal.ml" 
+                href="mailto:vishal@vishal.ml"  
                 className="text-[hsl(var(--primary))] hover:text-[hsl(var(--primary))/80] transition-colors"
                 aria-label="Email"
             >
@@ -57,7 +57,7 @@ export function SiteFooter() {
         </div>
 
         {/* Copyright */}
-        <div className="text-xs text-muted-foreground font-mono">
+        <div className="text-xs text-muted-foreground font-mono" suppressHydrationWarning>
           <AdminGate /> {currentYear} vishal.ml
         </div>
 
