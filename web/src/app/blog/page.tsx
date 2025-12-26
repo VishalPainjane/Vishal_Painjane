@@ -2,7 +2,7 @@ import { prisma } from "@/lib/db";
 import { BlogList } from "@/components/blog-list";
 import { PageLayout } from "@/components/page-layout";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 60;
 
 export default async function BlogPage() {
   let posts: any[] = [];

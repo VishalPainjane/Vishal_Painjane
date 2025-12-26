@@ -59,7 +59,7 @@ async function getReflections() {
   }
 }
 
-export const dynamic = 'force-dynamic'; // Ensure it revalidates on request
+export const revalidate = 60; // Ensure it revalidates on request
 
 export default async function WeeklyReflectionsPage() {
   const reflectionsData = await getReflections();

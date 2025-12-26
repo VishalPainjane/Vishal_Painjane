@@ -2,7 +2,7 @@ import { prisma } from "@/lib/db";
 import { ReadingListView } from "@/components/reading-list-view";
 import { PageLayout } from "@/components/page-layout";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 60;
 
 export default async function ReadingListPage() {
   let items: any[] = [];

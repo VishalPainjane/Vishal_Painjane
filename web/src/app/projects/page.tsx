@@ -2,7 +2,7 @@ import { prisma } from "@/lib/db";
 import { ProjectList } from "@/components/project-list";
 import { PageLayout } from "@/components/page-layout";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 60;
 
 export default async function ProjectsPage() {
   let projects: any[] = [];
