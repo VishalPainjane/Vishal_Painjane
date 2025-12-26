@@ -2,29 +2,38 @@
 @plugin "@tailwindcss/typography";
 
 :root {
-  /* Light Mode */
+  /* Original Light Mode */
   --background: 0 0% 100%;
   --foreground: 240 10% 3.9%;
-  --primary: 263 70% 65%; /* #a78bfa */
+  --primary: 263 70% 65%; /* Violet #a78bfa */
   
   --muted: 240 4.8% 95.9%;
   --muted-foreground: 240 3.8% 46.1%;
   
   --border: 240 5.9% 90%;
-  --radius: 0rem;
+  --radius: 0.5rem;
 }
 
 .dark {
-  /* Dark Mode - Exact Deep Blue/Black from Screenshot */
+  /* Original Deep Blue/Black Theme */
   --background: 224 71% 4%; /* #030711 */
-  --foreground: 0 0% 98%; /* White text */
-  
-  --primary: 263 70% 65%; /* #a78bfa */
+  --foreground: 0 0% 98%;
+  --primary: 263 70% 65%; /* Violet #a78bfa */
   
   --muted: 217 32% 17%;
   --muted-foreground: 215 20.2% 65.1%;
   
   --border: 217 32% 17%;
+}
+
+/* Special Hacker Theme for Backdoor Only */
+.hacker-theme {
+  --background: 144 100% 2%;
+  --foreground: 142 76% 36%;
+  --primary: 142 71% 45%; /* Green #22c55e */
+  --muted: 144 100% 5%;
+  --muted-foreground: 142 76% 36% / 0.5;
+  --border: 142 76% 36% / 0.2;
 }
 
 @theme inline {
@@ -35,19 +44,7 @@
   --color-muted-foreground: hsl(var(--muted-foreground));
   --color-border: hsl(var(--border));
   
-  /* Font Stack - Prioritize IBM Plex Mono */
-  --font-mono: "IBM Plex Mono", "Fira Code", "Courier Prime", monospace;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root:not(.light) {
-    --background: 224 71% 4%;
-    --foreground: 0 0% 98%;
-    --primary: 263 70% 65%;
-    --muted: 217 32% 17%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --border: 217 32% 17%;
-  }
+  --font-mono: "IBM Plex Mono", "Fira Code", monospace;
 }
 
 body {
@@ -61,30 +58,17 @@ body {
 @utility container {
     margin-inline: auto;
     padding-inline: 1rem;
-    max-width: 42rem; /* approx 672px */
+    max-width: 42rem;
 }
 
 @utility prose-custom {
     @apply prose dark:prose-invert max-w-none font-mono;
     p {
-        @apply leading-relaxed text-pretty;
+        @apply leading-relaxed;
         margin-top: 1.5em;
         margin-bottom: 1.5em;
-        font-size: 0.95rem;
-    }
-    h1 {
-        @apply scroll-m-20 text-4xl font-bold tracking-tight mb-6;
-    }
-    h2 {
-        @apply scroll-m-20 border-b pb-2 text-xl font-semibold tracking-tight first:mt-0;
     }
     a {
-        @apply font-medium text-[hsl(var(--primary))] underline underline-offset-4 decoration-[hsl(var(--primary))] hover:decoration-[hsl(var(--primary))/80];
-    }
-    ul {
-        @apply list-disc list-outside ml-5;
-    }
-    li {
-        @apply pl-1;
+        @apply font-medium text-primary underline underline-offset-4 decoration-primary/30 hover:decoration-primary transition-all;
     }
 }

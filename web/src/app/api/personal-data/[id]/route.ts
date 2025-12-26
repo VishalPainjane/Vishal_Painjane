@@ -4,6 +4,8 @@ import { verifySession } from '@/lib/auth';
 import { cookies } from 'next/headers';
 import { del } from '@vercel/blob';
 
+export const dynamic = 'force-dynamic';
+
 export async function PUT(
   request: Request,
   { params }: { params: Promise<{ id: string }> }

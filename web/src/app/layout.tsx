@@ -39,10 +39,9 @@ export default function RootLayout({
         >
           <div className="relative flex min-h-screen flex-col" suppressHydrationWarning>
             <SiteHeader />
-            <main className="flex-1 container mx-auto max-w-3xl px-6 mt-16 mb-20">
+            <main className="flex-1">
                 {children}
             </main>
-            {/* Footer is minimal/non-existent in the screenshot, mostly just content flow */}
             <SiteFooter />
           </div>
         </ThemeProvider>

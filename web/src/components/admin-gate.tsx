@@ -48,21 +48,21 @@ export function AdminGate() {
 
       <AnimatePresence>
         {isOpen && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm">
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-background/80 backdrop-blur-sm hacker-theme">
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1, x: error ? [0, -10, 10, -10, 10, 0] : 0 }}
               exit={{ opacity: 0, scale: 0.95 }}
               transition={{ duration: 0.2 }}
-              className="w-full max-w-sm p-6 bg-black border border-green-500 shadow-[0_0_20px_rgba(34,197,94,0.2)] rounded-lg"
+              className="w-full max-w-sm p-6 bg-background border border-primary shadow-[0_0_20px_hsl(var(--primary)/0.2)] rounded-lg"
             >
               <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-                <label className="text-green-500 font-mono text-sm tracking-widest">IDENTIFICATION KEY</label>
+                <label className="text-primary font-mono text-sm tracking-widest">IDENTIFICATION KEY</label>
                 <input
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="bg-black border-b border-green-500 text-green-500 outline-none font-mono py-2 text-center text-xl focus:border-b-2"
+                  className="bg-background border-b border-primary text-primary outline-none font-mono py-2 text-center text-xl focus:border-b-2"
                   autoFocus
                 />
               </form>

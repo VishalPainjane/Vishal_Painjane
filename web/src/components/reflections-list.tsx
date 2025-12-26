@@ -42,7 +42,7 @@ function AccordionItem({ item }: { item: ReflectionGroup }) {
         onClick={() => setIsOpen(!isOpen)}
         className="flex w-full items-center justify-between py-4 text-left group"
       >
-        <span className="text-[hsl(var(--primary))] font-bold text-lg group-hover:opacity-80 transition-opacity">
+        <span className="text-primary font-bold text-lg group-hover:opacity-80 transition-opacity">
             {item.month}
         </span>
         {isOpen ? (

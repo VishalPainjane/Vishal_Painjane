@@ -7,7 +7,8 @@ import { motion } from "framer-motion"; // Server components can't use motion di
 
 import { prisma } from "@/lib/db";
 import { ReflectionsList } from "@/components/reflections-list";
-import { PageTransitionWrapper } from "@/components/page-transition-wrapper"; // I'll create this to handle the page transitions
+import { PageTransitionWrapper } from "@/components/page-transition-wrapper";
+import { PageLayout } from "@/components/page-layout";
 
 function SmallAlienIcon() {
   return (
@@ -64,51 +65,53 @@ export default async function WeeklyReflectionsPage() {
   const reflectionsData = await getReflections();
 
   return (
-    <PageTransitionWrapper>
-      <div className="font-mono text-foreground max-w-3xl mx-auto">
-        <div className="flex flex-col gap-12">
-          {/* Breadcrumb */}
-          <div className="flex items-center gap-3 text-sm text-muted-foreground">
-            <SmallAlienIcon />
-            <div className="flex items-center gap-2">
-              <Link href="/" className="hover:text-foreground transition-colors">Home</Link>
-              <span>/</span>
-              <Link href="/learning" className="hover:text-foreground transition-colors">Learning</Link>
-              <span>/</span>
-              <span className="text-foreground">Weekly Reflections</span>
+    <PageLayout>
+        <PageTransitionWrapper>
+        <div className="font-mono text-foreground max-w-3xl mx-auto">
+            <div className="flex flex-col gap-12">
+            {/* Breadcrumb */}
+            <div className="flex items-center gap-3 text-sm text-muted-foreground">
+                <SmallAlienIcon />
+                <div className="flex items-center gap-2">
+                <Link href="/" className="hover:text-foreground transition-colors">Home</Link>
+                <span>/</span>
+                <Link href="/learning" className="hover:text-foreground transition-colors">Learning</Link>
+                <span>/</span>
+                <span className="text-foreground">Weekly Reflections</span>
+                </div>
             </div>
-          </div>
 
-          {/* Header */}
-          <div className="space-y-4">
-            <h1 className="text-3xl font-bold tracking-tight">Weekly Reflections</h1>
-            <p className="text-muted-foreground leading-relaxed max-w-2xl">
-              My attempt at documenting, reflecting on, and being grateful for what I learned each week in my pursuit of knowledge.
-            </p>
-          </div>
+            {/* Header */}
+            <div className="space-y-4">
+                <h1 className="text-3xl font-bold tracking-tight">Weekly Reflections</h1>
+                <p className="text-muted-foreground leading-relaxed max-w-2xl">
+                My attempt at documenting, reflecting on, and being grateful for what I learned each week in my pursuit of knowledge.
+                </p>
+            </div>
 
-          {/* Accordion List */}
-          {/* @ts-ignore */}
-          <ReflectionsList initialData={reflectionsData} />
+            {/* Accordion List */}
+            {/* @ts-ignore */}
+            <ReflectionsList initialData={reflectionsData} />
 
-          {/* Footer Navigation */}
-          <div className="flex justify-center items-center gap-4 pt-20 pb-16 text-[hsl(var(--primary))] font-medium">
-            <Link 
-              href="/learning/weekly-reflections" 
-              className="hover:text-[hsl(var(--primary))/80] transition-colors hover:underline underline-offset-4"
-            >
-              Reflections Page
-            </Link>
-            <span className="text-muted-foreground">|</span>
-            <Link 
-              href="/" 
-              className="hover:text-[hsl(var(--primary))/80] transition-colors hover:underline underline-offset-4"
-            >
-              Home Page
-            </Link>
-          </div>
+            {/* Footer Navigation */}
+            <div className="flex justify-center items-center gap-4 pt-20 pb-16 text-[hsl(var(--primary))] font-medium">
+                <Link 
+                href="/learning/weekly-reflections" 
+                className="hover:text-[hsl(var(--primary))/80] transition-colors hover:underline underline-offset-4"
+                >
+                Reflections Page
+                </Link>
+                <span className="text-muted-foreground">|</span>
+                <Link 
+                href="/" 
+                className="hover:text-[hsl(var(--primary))/80] transition-colors hover:underline underline-offset-4"
+                >
+                Home Page
+                </Link>
+            </div>
+            </div>
         </div>
-      </div>
-    </PageTransitionWrapper>
+        </PageTransitionWrapper>
+    </PageLayout>
   );
 }

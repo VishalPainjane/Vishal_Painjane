@@ -8,6 +8,7 @@ interface PersonalFile {
   originalName: string;
   size: number;
   mimeType: string;
+  url?: string;
 }
 
 interface PersonalEntry {
@@ -44,10 +45,14 @@ export function PersonalDataManager({ onUpdate }: PersonalDataManagerProps) {
       const res = await fetch("/api/personal-data");
       if (res.ok) {
         const data = await res.json();
+        console.log("Personal data fetched:", data);
         setEntries(data);
+      } else {
+        const error = await res.json();
+        console.error("Failed to fetch personal data:", error);
       }
     } catch (error) {
-      console.error("Failed to fetch personal data", error);
+      console.error("Error in fetchEntries:", error);
     }
   };
 
@@ -155,9 +160,9 @@ export function PersonalDataManager({ onUpdate }: PersonalDataManagerProps) {
   }
 
   return (
-    <div className="w-full">
-      <div className="mb-8 p-6 border border-green-500/30 bg-green-900/10 rounded-lg">
-        <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
+    <div className="w-full hacker-theme">
+      <div className="mb-8 p-6 border border-border bg-muted/10 rounded-2xl">
+        <h2 className="text-xl font-bold mb-4 flex items-center gap-2 text-primary">
           {editingId ? <Edit2 className="w-5 h-5" /> : <Plus className="w-5 h-5" />}
           {editingId ? "UPDATE SECURE ENTRY" : "NEW SECURE ENTRY"}
         </h2>
@@ -168,7 +173,7 @@ export function PersonalDataManager({ onUpdate }: PersonalDataManagerProps) {
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               placeholder="TITLE / KEY"
-              className="bg-black border border-green-500/30 p-3 rounded text-green-500 focus:border-green-500 outline-none md:col-span-2"
+              className="bg-background border border-border p-3 rounded-xl text-primary focus:border-primary/50 outline-none md:col-span-2 transition-all"
               required
             />
             <input
@@ -176,19 +181,19 @@ export function PersonalDataManager({ onUpdate }: PersonalDataManagerProps) {
               value={category}
               onChange={(e) => setCategory(e.target.value)}
               placeholder="CATEGORY"
-              className="bg-black border border-green-500/30 p-3 rounded text-green-500 focus:border-green-500 outline-none"
+              className="bg-background border border-border p-3 rounded-xl text-primary focus:border-primary/50 outline-none transition-all"
             />
           </div>
           <textarea
             value={content}
             onChange={(e) => setContent(e.target.value)}
             placeholder="SECURE DATA CONTENT..."
-            className="bg-black border border-green-500/30 p-3 rounded text-green-500 focus:border-green-500 outline-none h-40 font-mono text-sm"
+            className="bg-background border border-border p-3 rounded-xl text-primary focus:border-primary/50 outline-none h-40 font-mono text-sm transition-all resize-none"
             required
           />
           
-          <div className="flex flex-col md:flex-row md:items-center gap-4 border border-green-500/30 p-3 rounded border-dashed">
-            <label className="cursor-pointer flex items-center gap-2 text-green-500 hover:text-green-400 text-sm">
+          <div className="flex flex-col md:flex-row md:items-center gap-4 border border-border p-3 rounded-xl border-dashed">
+            <label className="cursor-pointer flex items-center gap-2 text-primary/60 hover:text-primary text-sm transition-colors">
                 <Paperclip className="w-4 h-4" />
                 {selectedFile ? selectedFile.name : "ATTACH FILE (PDF, IMG, ETC)"}
                 <input 
@@ -209,9 +214,9 @@ export function PersonalDataManager({ onUpdate }: PersonalDataManagerProps) {
                         id="replace" 
                         checked={replaceExisting} 
                         onChange={(e) => setReplaceExisting(e.target.checked)}
-                        className="accent-green-500"
+                        className="accent-primary"
                     />
-                    <label htmlFor="replace" className="text-[10px] text-green-500/70 font-bold cursor-pointer">
+                    <label htmlFor="replace" className="text-[10px] text-muted-foreground font-bold cursor-pointer">
                         REPLACE EXISTING
                     </label>
                 </div>
@@ -222,7 +227,7 @@ export function PersonalDataManager({ onUpdate }: PersonalDataManagerProps) {
             <button
               type="submit"
               disabled={loading}
-              className="bg-green-600 text-black font-bold py-2 px-6 rounded hover:bg-green-500 transition-colors flex items-center gap-2"
+              className="bg-primary text-background font-bold py-2 px-6 rounded-xl hover:bg-primary/90 transition-all flex items-center gap-2 disabled:opacity-50"
             >
               {loading ? <Loader2 className="animate-spin w-4 h-4" /> : <Save className="w-4 h-4" />}
               {editingId ? "SAVE CHANGES" : "ENCRYPT & STORE"}
@@ -231,7 +236,7 @@ export function PersonalDataManager({ onUpdate }: PersonalDataManagerProps) {
               <button
                 type="button"
                 onClick={resetForm}
-                className="bg-red-900/20 text-red-500 border border-red-500/30 font-bold py-2 px-6 rounded hover:bg-red-900/40 transition-colors flex items-center gap-2"
+                className="bg-muted border border-border text-foreground font-bold py-2 px-6 rounded-xl hover:bg-muted/80 transition-all flex items-center gap-2"
               >
                 <X className="w-4 h-4" /> CANCEL
               </button>
@@ -242,29 +247,29 @@ export function PersonalDataManager({ onUpdate }: PersonalDataManagerProps) {
 
       <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
         {entries.map((entry) => (
-          <div key={entry.id} className="border border-green-500/20 bg-black p-4 rounded hover:border-green-500/50 transition-all flex flex-col justify-between group">
+          <div key={entry.id} className="border border-border bg-muted/5 p-4 rounded-2xl hover:border-primary/30 transition-all flex flex-col justify-between group shadow-sm hover:shadow-primary/5">
             <div>
               <div className="flex justify-between items-start mb-2">
-                <h3 className="font-bold text-lg text-green-400 break-words">{entry.title}</h3>
-                <span className="text-[10px] uppercase border border-green-500/20 px-2 py-0.5 rounded text-green-500/50">
+                <h3 className="font-bold text-lg text-primary break-words leading-tight">{entry.title}</h3>
+                <span className="text-[10px] uppercase border border-border px-2 py-0.5 rounded text-muted-foreground font-black tracking-widest">
                   {entry.category}
                 </span>
               </div>
-              <p className="text-sm text-green-500/70 whitespace-pre-wrap break-words max-h-40 overflow-y-auto mb-4 custom-scrollbar">
+              <p className="text-sm text-primary/70 whitespace-pre-wrap break-words max-h-40 overflow-y-auto mb-4 custom-scrollbar leading-relaxed">
                 {entry.content}
               </p>
               
               {entry.attachments && entry.attachments.length > 0 && (
-                  <div className="mt-4 pt-4 border-t border-green-500/10 space-y-2">
-                      <h4 className="text-xs text-green-500/50 font-bold mb-2">ATTACHMENTS</h4>
+                  <div className="mt-4 pt-4 border-t border-border space-y-2">
+                      <h4 className="text-[9px] text-muted-foreground font-black tracking-widest mb-2 uppercase">Attachments</h4>
                       {entry.attachments.map(file => (
-                          <div key={file.id} className="flex items-center justify-between text-xs bg-green-900/10 p-2 rounded border border-green-500/10">
-                              <span className="truncate max-w-[120px] text-green-300" title={file.originalName}>{file.originalName}</span>
+                          <div key={file.id} className="flex items-center justify-between text-xs bg-primary/5 p-2 rounded-lg border border-primary/10 transition-colors hover:bg-primary/10">
+                              <span className="truncate max-w-[120px] text-primary/80 font-bold" title={file.originalName}>{file.originalName}</span>
                               <div className="flex gap-2">
-                                  <button onClick={() => handleDownload(file.id, file.originalName)} className="text-green-500 hover:text-white">
+                                  <button onClick={() => handleDownload(file.id, file.originalName)} className="text-primary/40 hover:text-primary transition-colors">
                                       <Download className="w-3 h-3" />
                                   </button>
-                                  <button onClick={() => handleFileDelete(file.id)} className="text-red-500 hover:text-red-400">
+                                  <button onClick={() => handleFileDelete(file.id)} className="text-red-500/40 hover:text-red-500 transition-colors">
                                       <Trash2 className="w-3 h-3" />
                                   </button>
                               </div>
@@ -274,25 +279,25 @@ export function PersonalDataManager({ onUpdate }: PersonalDataManagerProps) {
               )}
             </div>
             
-            <div className="flex justify-between items-center pt-4 border-t border-green-500/10 mt-auto">
+            <div className="flex justify-between items-center pt-4 border-t border-border mt-auto">
               <div className="flex flex-col gap-1">
-                <span className="text-[10px] text-green-500/30">
+                <span className="text-[10px] text-muted-foreground font-bold">
                   {new Date(entry.createdAt).toLocaleDateString()}
                 </span>
-                <span className="text-[9px] text-green-500/50 font-mono">
-                  SIZE: {getEntrySize(entry)}
+                <span className="text-[9px] text-primary/40 font-mono uppercase tracking-tighter">
+                  Size: {getEntrySize(entry)}
                 </span>
               </div>
-              <div className="flex gap-2"> {/* Removed opacity-0 group-hover:opacity-100 */}
+              <div className="flex gap-2">
                 <button
                   onClick={() => handleEdit(entry)}
-                  className="p-1.5 hover:bg-green-500/20 rounded text-green-400"
+                  className="p-1.5 hover:bg-primary/10 rounded-lg text-primary/60 hover:text-primary transition-all"
                 >
                   <Edit2 className="w-4 h-4" />
                 </button>
                 <button
                   onClick={() => handleDelete(entry.id)}
-                  className="p-1.5 hover:bg-red-500/20 rounded text-red-400"
+                  className="p-1.5 hover:bg-red-500/10 rounded-lg text-red-500/40 hover:text-red-500 transition-all"
                 >
                   <Trash2 className="w-4 h-4" />
                 </button>

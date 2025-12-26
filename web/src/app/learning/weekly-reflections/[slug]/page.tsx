@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { prisma } from "@/lib/db";
 import { PageTransitionWrapper } from "@/components/page-transition-wrapper";
+import { PageLayout } from "@/components/page-layout";
 
 function SmallAlienIcon() {
   return (
@@ -11,7 +12,7 @@ function SmallAlienIcon() {
       viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className="text-[hsl(var(--primary))]"
+      className="text-primary"
     >
       <path
         fillRule="evenodd"
@@ -47,62 +48,63 @@ export default async function ReflectionPage({ params }: { params: Promise<{ slu
   }
 
   return (
-    <PageTransitionWrapper>
-      <div className="font-mono text-foreground max-w-3xl mx-auto">
-        <div className="flex flex-col gap-12">
-          {/* Breadcrumb */}
-          <div className="flex items-center gap-3 text-sm text-muted-foreground">
-            <SmallAlienIcon />
-            <div className="flex items-center gap-2">
-              <Link href="/" className="hover:text-foreground transition-colors">Home</Link>
-              <span>/</span>
-              <Link href="/learning" className="hover:text-foreground transition-colors">Learning</Link>
-              <span>/</span>
-              <Link href="/learning/weekly-reflections" className="hover:text-foreground transition-colors">Weekly Reflections</Link>
-              <span>/</span>
-              <span className="text-foreground">{reflection.title}</span>
+    <PageLayout>
+        <PageTransitionWrapper>
+        <div className="font-mono text-foreground max-w-3xl mx-auto">
+            <div className="flex flex-col gap-12">
+            {/* Breadcrumb */}
+            <div className="flex items-center gap-3 text-sm text-muted-foreground">
+                <SmallAlienIcon />
+                <div className="flex items-center gap-2">
+                <Link href="/" className="hover:text-foreground transition-colors">Home</Link>
+                <span>/</span>
+                <Link href="/learning" className="hover:text-foreground transition-colors">Learning</Link>
+                <span>/</span>
+                <Link href="/learning/weekly-reflections" className="hover:text-foreground transition-colors">Weekly Reflections</Link>
+                <span>/</span>
+                <span className="text-foreground">{reflection.title}</span>
+                </div>
             </div>
-          </div>
 
-          {/* Header */}
-          <div className="space-y-4 border-b border-primary/20 pb-8">
-            <h1 className="text-3xl font-bold tracking-tight">{reflection.title}</h1>
-            <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-6 text-sm text-muted-foreground">
-              <span className="flex items-center gap-2">
-                <span className="text-primary">Date:</span> {reflection.dateRange}
-              </span>
-              <span className="hidden sm:inline text-primary/50">|</span>
-              <span className="flex items-center gap-2">
-                <span className="text-primary">Group:</span> {reflection.monthGroup}
-              </span>
+            {/* Header */}
+            <div className="space-y-4 border-b border-border pb-8">
+                <h1 className="text-3xl font-bold tracking-tight">{reflection.title}</h1>
+                <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-6 text-sm text-muted-foreground">
+                <span className="flex items-center gap-2">
+                    <span className="text-primary font-bold">Date:</span> {reflection.dateRange}
+                </span>
+                <span className="hidden sm:inline text-border">|</span>
+                <span className="flex items-center gap-2">
+                    <span className="text-primary font-bold">Group:</span> {reflection.monthGroup}
+                </span>
+                </div>
             </div>
-          </div>
 
-          {/* Content */}
-          <div className="prose prose-invert prose-green max-w-none">
-            <div className="whitespace-pre-wrap leading-relaxed text-base">
-              {reflection.content || "No content available for this week."}
-            </div>
-          </div>
-
-          {/* Footer Navigation */}
-          <div className="flex justify-center items-center gap-4 pt-20 pb-16 text-[hsl(var(--primary))] font-medium border-t border-primary/20 mt-8">
-            <Link 
-              href="/learning/weekly-reflections" 
-              className="hover:text-[hsl(var(--primary))/80] transition-colors hover:underline underline-offset-4"
-            >
-              Back to List
-            </Link>
-            <span className="text-muted-foreground">|</span>
-            <Link 
-              href="/" 
-              className="hover:text-[hsl(var(--primary))/80] transition-colors hover:underline underline-offset-4"
-            >
-              Home Page
-            </Link>
-          </div>
+                      {/* Content */}
+                      <div className="prose prose-invert prose-neutral max-w-none">
+                        <div className="whitespace-pre-wrap leading-relaxed text-base">
+                          {reflection.content || "No content available for this week."}
+                        </div>
+                      </div>
+            
+                      {/* Footer Navigation */}
+                      <div className="flex justify-center items-center gap-4 pt-20 pb-16 text-primary font-medium border-t border-border mt-8">
+                        <Link 
+                          href="/learning/weekly-reflections" 
+                          className="hover:text-primary/80 transition-colors hover:underline underline-offset-4"
+                        >
+                          Back to List
+                        </Link>
+                        <span className="text-muted-foreground">|</span>
+                        <Link 
+                          href="/" 
+                          className="hover:text-primary/80 transition-colors hover:underline underline-offset-4"
+                        >
+                          Home Page
+                        </Link>
+                      </div>            </div>
         </div>
-      </div>
-    </PageTransitionWrapper>
+        </PageTransitionWrapper>
+    </PageLayout>
   );
 }

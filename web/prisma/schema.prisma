@@ -49,3 +49,44 @@ model PersonalFile {
   url          String?       // URL to the file in Vercel Blob (now optional)
   createdAt    DateTime      @default(now())
 }
+
+model Post {
+  id         String   @id @default(uuid())
+  title      String
+  slug       String   @unique
+  content    String
+  excerpt    String?
+  coverImage String?
+  published  Boolean  @default(false)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model Project {
+  id           String       @id @default(uuid())
+  title        String
+  description  String
+  links        String       // JSON string of [{label: string, href: string}]
+  technologies Technology[]
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+}
+
+model Technology {
+  id        String    @id @default(uuid())
+  name      String    @unique
+  icon      String    // SVG string or URL
+  projects  Project[]
+  createdAt DateTime  @default(now())
+}
+
+model ReadingItem {
+  id        String   @id @default(uuid())
+  title     String
+  authors   String?
+  category  String
+  link      String
+  type      String   // "Paper" | "Book"
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

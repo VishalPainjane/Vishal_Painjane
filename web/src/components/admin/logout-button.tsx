@@ -14,10 +14,10 @@ export function LogoutButton() {
   return (
     <button
       onClick={handleLogout}
-      className="flex items-center gap-2 text-xs border border-red-900/50 text-red-500/70 px-3 py-1.5 rounded hover:bg-red-900/20 hover:text-red-400 transition-colors"
+      className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl border border-red-500/20 text-red-500/50 hover:bg-red-500 hover:text-white transition-all text-[10px] font-black uppercase tracking-widest"
     >
       <LogOut className="w-3 h-3" />
-      TERMINATE SESSION
+      Terminate_Session
     </button>
   );
 }

@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { PageLayout } from "@/components/page-layout";
 
 function SmallAlienIcon() {
   return (
@@ -40,52 +41,53 @@ export default function LearningPage() {
   };
 
   return (
-    <div className="font-mono text-foreground max-w-3xl mx-auto">
-      <motion.div
-        variants={container}
-        initial="hidden"
-        animate="show"
-        className="flex flex-col gap-12"
-      >
-        {/* Breadcrumb */}
-        <motion.div variants={item} className="flex items-center gap-3 text-sm text-muted-foreground">
-          <SmallAlienIcon />
-          <div className="flex items-center gap-2">
-            <Link href="/" className="hover:text-foreground transition-colors">Home</Link>
-            <span>/</span>
-            <span className="text-foreground">Learning</span>
-          </div>
-        </motion.div>
+    <PageLayout>
+        <div className="font-mono text-foreground max-w-3xl mx-auto">
+        <motion.div
+            variants={container}
+            initial="hidden"
+            animate="show"
+            className="flex flex-col gap-12"
+        >
+            {/* Breadcrumb */}
+            <motion.div variants={item} className="flex items-center gap-3 text-sm text-muted-foreground">
+            <SmallAlienIcon />
+            <div className="flex items-center gap-2">
+                <Link href="/" className="hover:text-foreground transition-colors">Home</Link>
+                <span>/</span>
+                <span className="text-foreground">Learning</span>
+            </div>
+            </motion.div>
 
-        {/* Header */}
-        <motion.div variants={item} className="space-y-4">
-          <h1 className="text-3xl font-bold tracking-tight">Learning</h1>
-          <p className="text-muted-foreground leading-relaxed">
-            A collection of my learning: weekly reflections, materials I use, and more.
-          </p>
-        </motion.div>
+            {/* Header */}
+            <motion.div variants={item} className="space-y-4">
+            <h1 className="text-3xl font-bold tracking-tight">Learning</h1>
+            <p className="text-muted-foreground leading-relaxed">
+                A collection of my learning: weekly reflections, materials I use, and more.
+            </p>
+            </motion.div>
 
-        {/* Links Section */}
-        <motion.div variants={item} className="flex flex-col gap-4">
+            {/* Links Section */}
+            <motion.div variants={item} className="flex flex-col gap-4">
+                <Link 
+                    href="/learning/weekly-reflections"
+                    className="text-lg font-bold underline underline-offset-4 decoration-2 decoration-foreground/30 hover:decoration-foreground transition-all w-fit"
+                >
+                    Weekly Reflections
+                </Link>
+            </motion.div>
+
+            {/* Footer Navigation */}
+            <motion.div variants={item} className="flex justify-center pt-20 pb-16">
             <Link 
-                href="/learning/weekly-reflections"
-                className="text-lg font-bold underline underline-offset-4 decoration-2 decoration-foreground/30 hover:decoration-foreground transition-all w-fit"
+                href="/" 
+                className="text-[hsl(var(--primary))] hover:text-[hsl(var(--primary))/80] transition-colors font-medium hover:underline underline-offset-4"
             >
-                Weekly Reflections
+                Home Page
             </Link>
-            {/* Utensils link removed as per instruction */}
+            </motion.div>
         </motion.div>
-
-        {/* Footer Navigation */}
-        <motion.div variants={item} className="flex justify-center pt-20 pb-16">
-          <Link 
-            href="/" 
-            className="text-[hsl(var(--primary))] hover:text-[hsl(var(--primary))/80] transition-colors font-medium hover:underline underline-offset-4"
-          >
-            Home Page
-          </Link>
-        </motion.div>
-      </motion.div>
-    </div>
+        </div>
+    </PageLayout>
   );
 }

@@ -23,6 +23,10 @@ export function SiteHeader() {
     setIsClient(true);
   }, []);
 
+  if (isClient && pathname.startsWith("/admin")) {
+    return null;
+  }
+
   return (
     <header className="w-full bg-background pt-8 pb-4" suppressHydrationWarning>
       <div className="container mx-auto flex items-center justify-between px-6 max-w-3xl" suppressHydrationWarning>

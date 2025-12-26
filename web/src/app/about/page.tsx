@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { PageLayout } from "@/components/page-layout";
 
 function SmallAlienIcon() {
   return (
@@ -40,72 +41,73 @@ export default function AboutPage() {
   };
 
   return (
-    <div className="font-mono text-foreground max-w-3xl mx-auto mb-20">
-      <motion.div
-        variants={container}
-        initial="hidden"
-        animate="show"
-        className="flex flex-col gap-12"
-      >
-        {/* Breadcrumb */}
-        <motion.div variants={item} className="flex items-center gap-3 text-sm text-muted-foreground">
-          <SmallAlienIcon />
-          <div className="flex items-center gap-2">
-            <Link href="/" className="hover:text-foreground transition-colors">Home</Link>
-            <span>/</span>
-            <span className="text-foreground">About</span>
-          </div>
-        </motion.div>
+    <PageLayout>
+        <div className="font-mono text-foreground max-w-3xl mx-auto mb-20">
+        <motion.div
+            variants={container}
+            initial="hidden"
+            animate="show"
+            className="flex flex-col gap-12"
+        >
+            {/* Breadcrumb */}
+            <motion.div variants={item} className="flex items-center gap-3 text-sm text-muted-foreground">
+            <SmallAlienIcon />
+            <div className="flex items-center gap-2">
+                <Link href="/" className="hover:text-foreground transition-colors">Home</Link>
+                <span>/</span>
+                <span className="text-foreground">About</span>
+            </div>
+            </motion.div>
 
-        {/* Content */}
-        <motion.article variants={item} className="prose-custom">
-          <h1 className="text-3xl font-bold tracking-tight mb-8">My Novice Journey&apos;s Monologue</h1>
-          
-          <p>
-            I studied Business in Japan for 4 years. But to be honest, I was never really interested in it.
-            My fascination always lay with Math and Engineering—specifically &quot;bridges and rockets.&quot;
-          </p>
-          <p>
-            The turning point came during my 3rd year of university when a professor introduced me to <strong>Machine Learning</strong>.
-            That spark pivoted my entire career trajectory.
-          </p>
-          <p>
-            I had no prior software experience. Yet, through sheer curiosity and effort, I secured a new-grad role as a <strong>Software Engineer</strong> in Japan.
-          </p>
-          
-          <h2 className="text-xl font-bold mt-12 mb-6">The Graph</h2>
-          <p className="mb-4">
-            If I were to visualize my progression on a horizontal axis:
-          </p>
-          
-          <div className="border border-border/50 rounded-md p-6 bg-[#0a0a0a] font-mono text-sm shadow-sm">
-            <ul className="list-none space-y-4 m-0 p-0">
-                <li className="flex items-start gap-3">
-                    <span className="text-red-400 font-bold min-w-[120px]">- Negative Scale:</span>
-                    <span className="text-muted-foreground">Started with an uninterested degree (Business).</span>
-                </li>
-                <li className="flex items-start gap-3">
-                    <span className="text-green-400 font-bold min-w-[120px]">+ Positive Scale:</span>
-                    <span className="text-muted-foreground">Moved to a current role in Tech.</span>
-                </li>
-            </ul>
-          </div>
-          
-          <p className="mt-8">
-            I attribute my success to a mix of luck and tenacity. My detours have finally converged, and I feel like my true journey has just begun.
-          </p>
-        </motion.article>
+            {/* Content */}
+            <motion.article variants={item} className="prose-custom">
+            <h1 className="text-3xl font-bold tracking-tight mb-8">My Novice Journey&apos;s Monologue</h1>
+            
+            <p>
+                I studied Business in Japan for 4 years. But to be honest, I was never really interested in it.
+                My fascination always lay with Math and Engineering—specifically &quot;bridges and rockets.&quot;
+            </p>
+            <p>
+                The turning point came during my 3rd year of university when a professor introduced me to <strong>Machine Learning</strong>.
+                That spark pivoted my entire career trajectory.
+            </p>
+            <p>
+                I had no prior software experience. Yet, through sheer curiosity and effort, I secured a new-grad role as a <strong>Software Engineer</strong> in Japan.
+            </p>
+            
+            <h2 className="text-xl font-bold mt-12 mb-6">The Graph</h2>
+            <p className="mb-4">
+                If I were to visualize my progression on a horizontal axis:
+            </p>
+            
+            <div className="border border-border/50 rounded-md p-6 bg-[#0a0a0a] font-mono text-sm shadow-sm">
+                <ul className="list-none space-y-4 m-0 p-0">
+                    <li className="flex items-start gap-3">
+                        <span className="text-red-400 font-bold min-w-[120px]">- Negative Scale:</span>
+                        <span className="text-muted-foreground">Started with an uninterested degree (Business).</span>
+                    </li>
+                                    <li className="flex items-start gap-3">
+                                        <span className="text-primary font-bold min-w-[120px]">+ Positive Scale:</span>
+                                        <span className="text-muted-foreground">Moved to a current role in Tech.</span>
+                                    </li>                </ul>
+            </div>
+            
+            <p className="mt-8">
+                I attribute my success to a mix of luck and tenacity. My detours have finally converged, and I feel like my true journey has just begun.
+            </p>
+            </motion.article>
 
-        {/* Footer Navigation */}
-        <motion.div variants={item} className="flex justify-center pt-8 border-t border-border/40">
-          <Link 
-            href="/" 
-            className="text-[hsl(var(--primary))] hover:text-[hsl(var(--primary))/80] transition-colors font-medium hover:underline underline-offset-4"
-          >
-            Home Page
-          </Link>
+            {/* Footer Navigation */}
+            <motion.div variants={item} className="flex justify-center pt-8 border-t border-border/40">
+            <Link 
+                href="/" 
+                className="text-[hsl(var(--primary))] hover:text-[hsl(var(--primary))/80] transition-colors font-medium hover:underline underline-offset-4"
+            >
+                Home Page
+            </Link>
+            </motion.div>
         </motion.div>
-      </motion.div>
-    </div>
+        </div>
+    </PageLayout>
   );
 }

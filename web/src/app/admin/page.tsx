@@ -17,17 +17,19 @@ export default async function AdminPage() {
 
   if (!isAuthenticated) {
     return (
-      <div className="min-h-screen bg-black text-green-500 font-mono p-6 flex items-center justify-center">
-        <LoginForm />
+      <div className="min-h-screen hacker-theme bg-background text-primary font-mono p-6 flex items-center justify-center relative overflow-hidden">
+        {/* Background Grid */}
+        <div className="absolute inset-0 pointer-events-none opacity-[0.03] bg-[linear-gradient(var(--color-primary)_1px,transparent_1px),linear-gradient(90deg,var(--color-primary)_1px,transparent_1px)] bg-[size:40px_40px]"></div>
+        <div className="z-10 w-full max-w-md">
+            <LoginForm />
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-black text-green-500 font-mono p-6">
-      <div className="max-w-6xl mx-auto">
-          <AdminDashboard />
-      </div>
+    <div className="min-h-screen hacker-theme bg-background text-primary font-mono">
+        <AdminDashboard />
     </div>
   );
 }

@@ -99,78 +99,78 @@ export function AddReflectionForm({ onUpdate }: AddReflectionFormProps) {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center font-mono w-full max-w-4xl mx-auto mt-10 px-4">
-      <h1 className="text-xl font-bold mb-6 text-green-500 text-left w-full border-b border-green-500/30 pb-2">
-        &gt; {editingId ? "UPDATE MODE" : "INSERTION MODE"}
+    <div className="flex flex-col items-center justify-center font-mono w-full max-w-4xl mx-auto mt-10 px-4 hacker-theme">
+      <h1 className="text-xl font-bold mb-6 text-primary text-left w-full border-b border-border pb-2 uppercase tracking-tighter">
+        &gt; {editingId ? "Update_Mode" : "Insertion_Mode"}
       </h1>
       
       <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-full mb-12">
         <div>
-            <div className="flex justify-between items-end mb-1">
-                <label className="text-green-500/70 text-xs block">
-                    {editingId ? "EDITING CONTENT" : "NEW WEEKLY LOG CONTENT"}
+            <div className="flex justify-between items-end mb-2">
+                <label className="text-muted-foreground text-[10px] font-bold uppercase tracking-widest block">
+                    {editingId ? "Editing Content" : "New Neural Log Content"}
                 </label>
                 {editingId && (
                     <button 
                         type="button" 
                         onClick={handleCancelEdit}
-                        className="text-xs text-red-500 hover:underline"
+                        className="text-[10px] text-red-500 hover:underline font-bold uppercase tracking-widest"
                     >
-                        CANCEL EDIT
+                        Cancel_Edit
                     </button>
                 )}
             </div>
             <textarea
             value={content}
             onChange={(e) => setContent(e.target.value)}
-            className="w-full bg-black border border-green-500/50 text-green-500 p-3 rounded outline-none focus:border-green-500 h-64 font-mono text-sm"
+            className="w-full bg-background border border-border text-primary p-4 rounded-xl outline-none focus:border-primary/50 h-64 font-mono text-sm leading-relaxed transition-all resize-none"
             required
-            placeholder={editingId ? "Modify content..." : "Enter your learnings for this week..."}
+            placeholder={editingId ? "Modify content payload..." : "Enter your learnings for this week..."}
             />
         </div>
 
         <button
           type="submit"
           disabled={loading}
-          className="bg-green-900/20 border border-green-500/50 text-green-500 py-3 hover:bg-green-500/10 transition-colors disabled:opacity-50 font-bold flex items-center justify-center gap-2"
+          className="bg-primary text-background font-bold py-4 rounded-xl hover:bg-primary/90 transition-all disabled:opacity-50 flex items-center justify-center gap-2 uppercase text-xs tracking-[0.2em]"
         >
           {loading ? <Loader2 className="animate-spin h-4 w-4" /> : (editingId ? <Edit2 className="h-4 w-4" /> : <Plus className="h-4 w-4" />)}
-          {loading ? "EXECUTING..." : (editingId ? "UPDATE RECORD" : "EXECUTE INJECTION")}
+          {loading ? "Executing..." : (editingId ? "Update Record" : "Execute Injection")}
         </button>
       </form>
 
-      <h2 className="text-lg font-bold mb-4 text-green-500 text-left w-full border-b border-green-500/30 pb-2">
-        &gt; DATABASE RECORDS
+      <h2 className="text-lg font-bold mb-4 text-primary text-left w-full border-b border-border pb-2 uppercase tracking-tighter">
+        &gt; Database_Records
       </h2>
       
-      <div className="w-full grid gap-4">
+      <div className="w-full grid gap-4 pb-20">
         {reflections.map((reflection) => (
-            <div key={reflection.id} className="border border-green-500/30 p-4 rounded bg-green-500/5 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-                <div>
-                    <div className="font-bold text-green-400">{reflection.title}</div>
-                    <div className="text-xs text-green-500/60">{reflection.dateRange}</div>
-                    <div className="text-xs text-green-500/40 mt-1 truncate max-w-md">{reflection.content}</div>
+            <div key={reflection.id} className="border border-border p-5 rounded-2xl bg-muted/5 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 hover:border-primary/30 transition-colors group">
+                <div className="flex-1 min-w-0">
+                    <div className="font-bold text-primary text-lg tracking-tight">{reflection.title}</div>
+                    <div className="text-[10px] text-muted-foreground font-bold uppercase tracking-widest mt-1 opacity-60">{reflection.dateRange}</div>
+                    <div className="text-xs text-primary/40 mt-3 truncate max-w-xl font-mono italic">{reflection.content}</div>
                 </div>
-                <div className="flex gap-2">
+                <div className="flex gap-2 shrink-0">
                     <button
                         onClick={() => handleEdit(reflection)}
-                        className="p-2 border border-green-500/30 rounded hover:bg-green-500/20 text-green-400"
+                        className="p-2 border border-border rounded-lg hover:bg-primary/10 text-primary/60 hover:text-primary transition-all"
                         title="Edit"
                     >
-                        <Edit2 className="h-4 w-4" />
+                        <Edit2 className="w-4 h-4" />
                     </button>
                     <button
                         onClick={() => handleDelete(reflection.id)}
-                        className="p-2 border border-red-500/30 rounded hover:bg-red-500/20 text-red-400"
+                        className="p-2 border border-border rounded-lg hover:bg-red-500/10 text-red-500/40 hover:text-red-500 transition-all"
                         title="Delete"
                     >
-                        <Trash2 className="h-4 w-4" />
+                        <Trash2 className="w-4 h-4" />
                     </button>
                 </div>
             </div>
         ))}
         {reflections.length === 0 && (
-            <div className="text-green-500/40 italic text-center py-8">NO RECORDS FOUND</div>
+            <div className="text-muted-foreground italic text-center py-12 border border-border border-dashed rounded-2xl">NO RECORDS FOUND</div>
         )}
       </div>
     </div>
