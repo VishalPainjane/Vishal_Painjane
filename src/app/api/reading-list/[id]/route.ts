@@ -38,7 +38,7 @@ export async function PUT(
       data,
     });
 
-    revalidateTag("reading-list");
+    revalidateTag("reading-list", "default");
 
     return NextResponse.json(item);
   } catch (error) {
@@ -73,7 +73,7 @@ export async function DELETE(
       where: { id },
     });
 
-    revalidateTag("reading-list");
+    revalidateTag("reading-list", "default");
 
     return NextResponse.json({ success: true });
   } catch (error) {

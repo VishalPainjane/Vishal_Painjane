@@ -44,7 +44,7 @@ export async function PUT(
       }
     });
 
-    revalidateTag("projects");
+    revalidateTag("projects", "default");
 
     return NextResponse.json(project);
   } catch (error) {
@@ -79,7 +79,7 @@ export async function DELETE(
       where: { id },
     });
 
-    revalidateTag("projects");
+    revalidateTag("projects", "default");
 
     return NextResponse.json({ success: true });
   } catch (error) {

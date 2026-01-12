@@ -27,7 +27,7 @@ export async function DELETE(
       where: { id },
     });
 
-    revalidateTag("technologies");
+    revalidateTag("technologies", "default");
 
     return NextResponse.json({ success: true });
   } catch (error) {

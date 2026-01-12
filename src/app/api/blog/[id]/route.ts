@@ -54,9 +54,7 @@ export async function PUT(
       data,
     });
 
-    revalidateTag("posts");
-
-    return NextResponse.json(post);
+    revalidateTag("posts", "default");
   } catch (error) {
     console.error("Failed to update post:", error);
     return NextResponse.json(
@@ -89,7 +87,7 @@ export async function DELETE(
       where: { id },
     });
 
-    revalidateTag("posts");
+    revalidateTag("posts", "default");
 
     return NextResponse.json({ success: true });
   } catch (error) {

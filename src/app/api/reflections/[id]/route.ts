@@ -30,7 +30,7 @@ export async function PUT(
       data: { content },
     });
 
-    revalidateTag('reflections');
+    revalidateTag('reflections', 'default');
 
     return NextResponse.json(reflection);
   } catch (error) {
@@ -61,7 +61,7 @@ export async function DELETE(
       where: { id },
     });
 
-    revalidateTag('reflections');
+    revalidateTag('reflections', 'default');
 
     return NextResponse.json({ success: true });
   } catch (error) {

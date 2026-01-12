@@ -49,7 +49,7 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    revalidateTag("reading-list");
+    revalidateTag("reading-list", "default");
 
     return NextResponse.json(item, { status: 201 });
   } catch (error) {

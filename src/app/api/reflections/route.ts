@@ -83,7 +83,7 @@ export async function POST(request: Request) {
       },
     });
 
-    revalidateTag('reflections');
+    revalidateTag('reflections', 'default');
 
     return NextResponse.json(reflection);
   } catch (error) {

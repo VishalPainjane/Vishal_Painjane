@@ -48,7 +48,7 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    revalidateTag("technologies");
+    revalidateTag("technologies", "default");
 
     return NextResponse.json(tech, { status: 201 });
   } catch (error) {

@@ -56,7 +56,7 @@ export async function POST(req: NextRequest) {
       }
     });
 
-    revalidateTag("projects");
+    revalidateTag("projects", "default");
 
     return NextResponse.json(project, { status: 201 });
   } catch (error) {
