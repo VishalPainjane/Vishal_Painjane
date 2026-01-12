@@ -39,14 +39,14 @@ export function SiteFooter() {
                 <Home className="w-5 h-5" />
             </Link>
             <a 
-                href="mailto:vishal@vishal.ml" 
+                href="mailto:vishalpainjane22@gmail.com" 
                 className="text-[hsl(var(--primary))] hover:text-[hsl(var(--primary))/80] transition-colors"
                 aria-label="Email"
             >
                 <Mail className="w-5 h-5" />
             </a>
             <a 
-                href="https://github.com/vishaldotml" 
+                href="https://github.com/VishalPainjane" 
                 target="_blank" 
                 rel="noreferrer" 
                 className="text-[hsl(var(--primary))] hover:text-[hsl(var(--primary))/80] transition-colors"
@@ -55,7 +55,7 @@ export function SiteFooter() {
                 <Github className="w-5 h-5" />
             </a>
             <a 
-                href="https://x.com/vishaldotml" 
+                href="https://x.com/vishal_painjane" 
                 target="_blank" 
                 rel="noreferrer" 
                 className="text-[hsl(var(--primary))] hover:text-[hsl(var(--primary))/80] transition-colors"

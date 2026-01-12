@@ -75,7 +75,7 @@ export default function Home() {
             {/* Bio Section - Paragraphs */}
             <motion.div variants={item} className="space-y-6 text-sm md:text-base leading-relaxed max-w-none">
                 <p>
-                I{"'"}m a swe based in Tokyo. I love coffee, machine learning, math, and among others.
+                I{"'"}m a CSE student at IIIT. I love coffee, machine learning, math, and among others.
                 Glad to have you here! Feel free to look around :)
                 </p>
                 
@@ -162,7 +162,7 @@ export default function Home() {
             <motion.div variants={item} className="mb-12">
                 <h2 className="text-xl md:text-2xl font-bold tracking-tight mb-4">Socials</h2>
                 <p className="text-sm md:text-base leading-relaxed text-muted-foreground">
-                    I&apos;m always open to chat! Please feel free to ping me at <a href="mailto:vishal@vishal.ml" className="text-primary font-medium hover:underline">vishal@vishal.ml</a> or <a href="https://x.com/vishaldotml" target="_blank" rel="noreferrer" className="text-primary font-medium hover:underline">Twitter</a> if you have any questions or just wanna talk.
+                    I&apos;m always open to chat! Please feel free to ping me at <a href="mailto:vishalpainjane22@gmail.com" className="text-primary font-medium hover:underline">vishalpainjane22@gmail.com</a> or <a href="https://x.com/vishal_painjane" target="_blank" rel="noreferrer" className="text-primary font-medium hover:underline">Twitter</a> if you have any questions or just wanna talk.
                 </p>
             </motion.div>
 

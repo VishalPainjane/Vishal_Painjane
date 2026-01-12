@@ -7,12 +7,12 @@ export const fontVariables = {
 // Based on standard Vercel/Next.js portfolio templates often used:
 export const siteConfig = {
   name: "Vishal",
-  description: "Software Engineer based in Tokyo.",
+  description: "Computer Science and Engineering at IIIT",
   url: "https://vishal.ml",
   ogImage: "https://vishal.ml/og.jpg",
   links: {
-    twitter: "https://x.com/vishaldotml",
-    github: "https://github.com/vishaldotml",
-    mail: "mailto:vishal@vishal.ml",
+    twitter: "https://x.com/vishal_painjane",
+    github: "https://github.com/VishalPainjane",
+    mail: "mailto:vishalpainjane22@gmail.com",
   },
 };
