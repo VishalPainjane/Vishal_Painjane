@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/db';
 import { verifySession } from '@/lib/auth';
 import { cookies } from 'next/headers';
+import { revalidateTag } from 'next/cache';
 
 export async function PUT(
   request: Request,
@@ -28,6 +29,8 @@ export async function PUT(
       where: { id },
       data: { content },
     });
+
+    revalidateTag('reflections');
 
     return NextResponse.json(reflection);
   } catch (error) {
@@ -57,6 +60,8 @@ export async function DELETE(
     await prisma.reflection.delete({
       where: { id },
     });
+
+    revalidateTag('reflections');
 
     return NextResponse.json({ success: true });
   } catch (error) {

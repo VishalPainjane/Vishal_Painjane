@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
 import { verifySession } from "@/lib/auth";
 import { cookies } from "next/headers";
+import { revalidateTag } from "next/cache";
 
 function generateSlug(title: string): string {
   return title
@@ -53,6 +54,8 @@ export async function PUT(
       data,
     });
 
+    revalidateTag('posts');
+
     return NextResponse.json(post);
   } catch (error) {
     console.error("Failed to update post:", error);
@@ -85,6 +88,8 @@ export async function DELETE(
     await prisma.post.delete({
       where: { id },
     });
+
+    revalidateTag('posts');
 
     return NextResponse.json({ success: true });
   } catch (error) {
