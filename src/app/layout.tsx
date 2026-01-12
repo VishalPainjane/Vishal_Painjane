@@ -14,7 +14,7 @@ const ibmPlexMono = IBM_Plex_Mono({
 
 export const metadata: Metadata = {
   title: "vishal.ml",
-  description: "Software Engineer based in Tokyo.",
+  description: "Computer Science and Engineering at IIIT",
   icons: {
     icon: "/favicon.ico", 
   },

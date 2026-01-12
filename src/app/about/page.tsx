@@ -64,15 +64,16 @@ export default function AboutPage() {
             <h1 className="text-3xl font-bold tracking-tight mb-8">My Novice Journey&apos;s Monologue</h1>
             
             <p>
-                I studied Business in Japan for 4 years. But to be honest, I was never really interested in it.
-                My fascination always lay with Math and Engineering—specifically &quot;bridges and rockets.&quot;
+                Curiosity has always been the starting point. Things are rarely accepted as they are. Learning happens by experimenting, breaking things, and understanding why they work.
             </p>
             <p>
-                The turning point came during my 3rd year of university when a professor introduced me to <strong>Machine Learning</strong>.
-                That spark pivoted my entire career trajectory.
+                There was no fixed roadmap. Just <strong>consistent</strong> effort. When something feels interesting an algorithm or an ML concept the focus stays until the basics are clear.
             </p>
             <p>
-                I had no prior software experience. Yet, through sheer curiosity and effort, I secured a new-grad role as a <strong>Software Engineer</strong> in Japan.
+                Problem-solving became a strong habit. Practicing hundreds of algorithmic questions helped build logical thinking. Over time, it became clear that solving problems only on platforms isn’t enough.
+            </p>
+            <p>
+                Moving beyond theory. Turning logic into real systems through projects, AI experiments, and problem solving that actually matters.
             </p>
             
             <h2 className="text-xl font-bold mt-12 mb-6">The Graph</h2>
@@ -83,17 +84,17 @@ export default function AboutPage() {
             <div className="border border-border/50 rounded-md p-6 bg-[#0a0a0a] font-mono text-sm shadow-sm">
                 <ul className="list-none space-y-4 m-0 p-0">
                     <li className="flex items-start gap-3">
-                        <span className="text-red-400 font-bold min-w-[120px]">- Negative Scale:</span>
-                        <span className="text-muted-foreground">Started with an uninterested degree (Business).</span>
+                        <span className="text-red-400 font-bold min-w-[120px]">- Abstract Solver:</span>
+                        <span className="text-muted-foreground">Solving problems purely for the challenge</span>
                     </li>
                                     <li className="flex items-start gap-3">
-                                        <span className="text-primary font-bold min-w-[120px]">+ Positive Scale:</span>
-                                        <span className="text-muted-foreground">Moved to a current role in Tech.</span>
+                                        <span className="text-primary font-bold min-w-[120px]">+ Applied Architect:</span>
+                                        <span className="text-muted-foreground">Channeling that logic into tangible systems</span>
                                     </li>                </ul>
             </div>
             
             <p className="mt-8">
-                I attribute my success to a mix of luck and tenacity. My detours have finally converged, and I feel like my true journey has just begun.
+                The success so far is a mix of that initial hustle and a stubborn curiosity. The experiments are starting to converge, and it feels like the real work is just beginning.
             </p>
             </motion.article>
 
