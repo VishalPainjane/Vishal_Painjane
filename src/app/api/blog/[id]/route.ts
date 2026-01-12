@@ -55,6 +55,8 @@ export async function PUT(
     });
 
     revalidateTag("posts", "default");
+
+    return NextResponse.json(post);
   } catch (error) {
     console.error("Failed to update post:", error);
     return NextResponse.json(
