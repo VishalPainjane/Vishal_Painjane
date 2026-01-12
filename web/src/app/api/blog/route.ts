@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
 import { verifySession } from "@/lib/auth";
 import { cookies } from "next/headers";
-import { revalidateTag } from "next/cache";
 
 export const dynamic = 'force-dynamic';
 
@@ -77,8 +76,6 @@ export async function POST(req: NextRequest) {
         coverImage,
       },
     });
-
-    revalidateTag('posts');
 
     return NextResponse.json(post, { status: 201 });
   } catch (error) {
